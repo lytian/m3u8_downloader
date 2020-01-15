@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/m3u8_downloader.iml" filepath="$PROJECT_DIR$/m3u8_downloader.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/m3u8_downloader_android.iml" filepath="$PROJECT_DIR$/android/m3u8_downloader_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/example/android/m3u8_downloader_example_android.iml" filepath="$PROJECT_DIR$/example/android/m3u8_downloader_example_android.iml" />
+    </modules>
+  </component>
+</project>
