@@ -68,11 +68,6 @@ class M3u8Downloader {
     });
   }
 
-  static Future<bool> isRunning() async {
-    bool isRunning = await _channel.invokeMethod("isRunning");
-    return isRunning;
-  }
-
   static void pause(String url) async {
     assert(url != null && url != "");
 
@@ -85,4 +80,13 @@ class M3u8Downloader {
     await _channel.invokeMethod("cancel", { "url": url, "isDelete": isDelete });
   }
 
+  static Future<bool> isRunning() async {
+    bool isRunning = await _channel.invokeMethod("isRunning");
+    return isRunning;
+  }
+
+  static Future<String> getM3U8Path(String url) async {
+    String path = await _channel.invokeMethod("getM3U8Path", { "url": url });
+    return path;
+  }
 }

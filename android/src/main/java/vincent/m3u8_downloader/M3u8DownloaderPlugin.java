@@ -192,8 +192,6 @@ public class M3u8DownloaderPlugin implements FlutterPlugin, MethodCallHandler {
           }
         });
         result.success(null);
-      } else if (call.method.equals("isRunning")) {
-        result.success(M3U8Downloader.getInstance().isRunning());
       } else if (call.method.equals("pause")) {
         if (!call.hasArgument("url")) {
           result.error("1", "url必传", "");
@@ -218,7 +216,16 @@ public class M3u8DownloaderPlugin implements FlutterPlugin, MethodCallHandler {
           M3U8Downloader.getInstance().pause(url);
         }
         result.success(null);
-      } else {
+      } else if (call.method.equals("isRunning")) {
+        result.success(M3U8Downloader.getInstance().isRunning());
+      }  else if (call.method.equals("getM3U8Path")) {
+        if (!call.hasArgument("url")) {
+          result.error("1", "url必传", "");
+          return;
+        }
+        String url = call.argument("url");
+        result.success(M3U8Downloader.getInstance().getM3U8Path(url));
+      }  else {
         result.notImplemented();
       }
     } catch (JSONException e) {
