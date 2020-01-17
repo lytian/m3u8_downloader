@@ -144,6 +144,7 @@ public class M3u8DownloaderPlugin implements FlutterPlugin, MethodCallHandler {
             super.onDownloadSuccess(task);
             String saveDir = MUtils.getSaveFileDir(task.getUrl());
             final Map<String, Object> args = new HashMap<>();
+            args.put("url", task.getUrl());
             args.put("dir", saveDir);
             args.put("fileName", saveDir + File.separator + "local.m3u8");
 
@@ -182,10 +183,12 @@ public class M3u8DownloaderPlugin implements FlutterPlugin, MethodCallHandler {
 
             //下载错误，非UI线程
             if (errorCallbackHandle != -1) {
+              final Map<String, Object> args = new HashMap<>();
+              args.put("url", task.getUrl());
               handler.post(new Runnable() {
                 @Override
                 public void run() {
-                  flutterM3U8BackgroundExecutor.executeDartCallbackInBackgroundIsolate(errorCallbackHandle, null);
+                  flutterM3U8BackgroundExecutor.executeDartCallbackInBackgroundIsolate(errorCallbackHandle, args);
                 }
               });
             }

@@ -5,10 +5,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="21e1a017-b691-4068-ba97-9e5411542442" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/M3U8DownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/M3U8DownloadTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/M3U8Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/M3U8Downloader.java" afterDir="false" />
-    </list>
+    <list default="true" id="21e1a017-b691-4068-ba97-9e5411542442" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/.dart_tool/" />
     <ignored path="$PROJECT_DIR$/.idea/" />
     <ignored path="$PROJECT_DIR$/.pub/" />
@@ -169,7 +166,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-10" />
     <option name="y" value="-10" />
     <option name="width" value="1750" />
@@ -295,8 +292,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
-    <editor active="true" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22453083" />
       <window_info id="Captures" order="1" side_tool="true" />
