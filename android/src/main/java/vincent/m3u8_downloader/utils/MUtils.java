@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.URL;
 
 import vincent.m3u8_downloader.M3U8DownloaderConfig;
@@ -51,6 +52,23 @@ public class MUtils {
                         line = line.substring(0, line.length() - 1);
                     }
                     seconds = Float.parseFloat(line);
+                } else if (line.startsWith("#EXT-X-KEY:")) {
+                    line = line.split("#EXT-X-KEY:")[1];
+                    String[] arr = line.split(",");
+                    for (int i = 0; i < arr.length; i++) {
+                        if (arr[i].contains("=")) {
+                            String k = arr[i].split("=")[0];
+                            String v = arr[i].split("=")[1];
+                            if (k.equals("URI")) {
+                                // 去获取key
+                                v = v.replaceAll("\"", "");
+                                v = v.replaceAll("'", "");
+                                String keyUrl = basepath + v;
+                                BufferedReader keyReader = new BufferedReader(new InputStreamReader(new URL(keyUrl).openStream()));
+                                ret.setKey(keyReader.readLine());
+                            }
+                        }
+                    }
                 }
                 continue;
             }
@@ -127,8 +145,8 @@ public class MUtils {
         bfw.write("#EXT-X-VERSION:3\n");
         bfw.write("#EXT-X-MEDIA-SEQUENCE:0\n");
         bfw.write("#EXT-X-TARGETDURATION:13\n");
+        if (keyPath != null) bfw.write("#EXT-X-KEY:METHOD=AES-128,URI=\""+keyPath+"\"\n");
         for (M3U8Ts m3U8Ts : m3U8.getTsList()) {
-            if (keyPath != null) bfw.write("#EXT-X-KEY:METHOD=AES-128,URI=\""+keyPath+"\"\n");
             bfw.write("#EXTINF:" + m3U8Ts.getSeconds()+",\n");
             bfw.write(m3U8Ts.obtainEncodeTsFileName());
             bfw.newLine();
@@ -155,6 +173,14 @@ public class MUtils {
         outputStream.write(bytes);
         outputStream.flush();
         outputStream.close();
+    }
+
+    public static void saveFile(String text, String fileName) throws IOException{
+        File file = new File(fileName);
+        BufferedWriter out = new BufferedWriter(new FileWriter(file));
+        out.write(text);
+        out.flush();
+        out.close();
     }
 
     public static String getSaveFileDir(String url){

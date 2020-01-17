@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,16 +24,17 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 import vincent.m3u8_downloader.bean.M3U8Task;
+import vincent.m3u8_downloader.utils.MUtils;
 
-/** M3u8DownloaderPlugin */
-public class FlutterM3U8DownloaderPlugin implements FlutterPlugin, MethodCallHandler {
+/** FlutterM3U8DownloaderPlugin */
+public class M3u8DownloaderPlugin implements FlutterPlugin, MethodCallHandler {
   private static final  String TAG = "M3u8Downloader";
   private static final String CHANNEL_NAME = "vincent/m3u8_downloader";
   public static final String SHARED_PREFERENCES_KEY = "vincent.m3u8.downloader.pref";
   public static final String CALLBACK_DISPATCHER_HANDLE_KEY = "callback_dispatcher_handle_key";
 
 
-  private static FlutterM3U8DownloaderPlugin instance;
+  private static M3u8DownloaderPlugin instance;
   private MethodChannel channel;
   private Context context;
   private Handler handler;
@@ -42,7 +44,7 @@ public class FlutterM3U8DownloaderPlugin implements FlutterPlugin, MethodCallHan
   public static void registerWith(Registrar registrar) {
     Log.e(TAG, "registerWith");
     if (instance == null) {
-      instance = new FlutterM3U8DownloaderPlugin();
+      instance = new M3u8DownloaderPlugin();
     }
     instance.onAttachedToEngine(registrar.context(), registrar.messenger());
   }
@@ -140,13 +142,17 @@ public class FlutterM3U8DownloaderPlugin implements FlutterPlugin, MethodCallHan
           @Override
           public void onDownloadSuccess(M3U8Task task) {
             super.onDownloadSuccess(task);
-            final  M3U8Task task1 = task;
+            String saveDir = MUtils.getSaveFileDir(task.getUrl());
+            final Map<String, Object> args = new HashMap<>();
+            args.put("dir", saveDir);
+            args.put("fileName", saveDir + File.separator + "local.m3u8");
+
             //下载成功
             if (successCallbackHandle != -1) {
               handler.post(new Runnable() {
                 @Override
                 public void run() {
-                  flutterM3U8BackgroundExecutor.executeDartCallbackInBackgroundIsolate(successCallbackHandle, task1);
+                  flutterM3U8BackgroundExecutor.executeDartCallbackInBackgroundIsolate(successCallbackHandle, args);
                 }
               });
             }
@@ -173,6 +179,7 @@ public class FlutterM3U8DownloaderPlugin implements FlutterPlugin, MethodCallHan
           @Override
           public void onDownloadError(final M3U8Task task, Throwable errorMsg) {
             super.onDownloadError(task, errorMsg);
+
             //下载错误，非UI线程
             if (errorCallbackHandle != -1) {
               handler.post(new Runnable() {

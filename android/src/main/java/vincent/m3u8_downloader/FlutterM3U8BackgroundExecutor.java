@@ -30,8 +30,8 @@ public class FlutterM3U8BackgroundExecutor implements MethodChannel.MethodCallHa
     }
 
     public static void setCallbackDispatcher(Context context, long callbackHandle) {
-        SharedPreferences prefs = context.getSharedPreferences(FlutterM3U8DownloaderPlugin.SHARED_PREFERENCES_KEY, 0);
-        prefs.edit().putLong(FlutterM3U8DownloaderPlugin.CALLBACK_DISPATCHER_HANDLE_KEY, callbackHandle).apply();
+        SharedPreferences prefs = context.getSharedPreferences(M3u8DownloaderPlugin.SHARED_PREFERENCES_KEY, 0);
+        prefs.edit().putLong(M3u8DownloaderPlugin.CALLBACK_DISPATCHER_HANDLE_KEY, callbackHandle).apply();
     }
 
     public boolean isRunning() {
@@ -58,8 +58,8 @@ public class FlutterM3U8BackgroundExecutor implements MethodChannel.MethodCallHa
 
     void startBackgroundIsolate(Context context) {
         if (!isRunning()) {
-            SharedPreferences p = context.getSharedPreferences(FlutterM3U8DownloaderPlugin.SHARED_PREFERENCES_KEY, 0);
-            long callbackHandle = p.getLong(FlutterM3U8DownloaderPlugin.CALLBACK_DISPATCHER_HANDLE_KEY, 0);
+            SharedPreferences p = context.getSharedPreferences(M3u8DownloaderPlugin.SHARED_PREFERENCES_KEY, 0);
+            long callbackHandle = p.getLong(M3u8DownloaderPlugin.CALLBACK_DISPATCHER_HANDLE_KEY, 0);
             startBackgroundIsolate(context, callbackHandle);
         }
     }

@@ -2,6 +2,7 @@ package vincent.m3u8_downloader;
 
 import android.content.Context;
 import android.os.Environment;
+import android.text.TextUtils;
 
 import java.io.File;
 

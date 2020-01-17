@@ -20,6 +20,7 @@ public class M3U8 {
     private long fileSize;//切片文件总大小
     private long totalTime;//总时间，单位毫秒
     private List<M3U8Ts> tsList = new ArrayList<M3U8Ts>();//视频切片
+    private String key; // m3u8的key
 
     public String getBasePath() {
         return basePath;
@@ -81,6 +82,14 @@ public class M3U8 {
             totalTime = totalTime + (int)(m3U8Ts.getSeconds() * 1000);
         }
         return totalTime;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     @Override

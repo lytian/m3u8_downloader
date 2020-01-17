@@ -73,12 +73,9 @@ class _MyAppState extends State<MyApp> {
             RaisedButton(
               child: Text("初始化配置"),
               onPressed: () async {
-
-                // M3u8Downloader.download("https://videomy.yongaomy.com/20191231/8P5tUoGm/index.m3u8");
                 _checkPermission().then((hasGranted) async {
                   if (hasGranted) {
                     String saveDir = await _findSavePath();
-                    print("================" + saveDir);
                     M3u8Downloader.config(debugMode: true, saveDir: saveDir);
                   }
                 });
@@ -87,13 +84,13 @@ class _MyAppState extends State<MyApp> {
             RaisedButton(
               child: Text("下载未加密m3u8"),
               onPressed: () {
-                M3u8Downloader.download(url: "https://videomy.yongaomy.com/20191231/8P5tUoGm/index.m3u8", progressCallback: downloadCallback);
+                M3u8Downloader.download(url: "http://hls.ciguang.tv/hdtv/video.m3u8", progressCallback: downloadCallback);
               },
             ),
             RaisedButton(
               child: Text("下载已加密m3u8"),
               onPressed: () {
-                M3u8Downloader.download(url: "https://video.huishenghuo888888.com/putong/20200108/3VhB5pDe/index.m3u8", progressCallback: downloadCallback);
+                M3u8Downloader.download(url: "http://pl-ali.youku.com/playlist/m3u8?ts=1524205957&keyframe=0&m3u8Md5=a85842b9ca4e77db4aa57c314c8e61c7&t1=200&pid=1133275aa6ac0891&vid=XMzU1MDY0NjEyMA==&type=flv&oip=1779113856&sid=0524205957937209643a0&token=2124&did=ae8263a35f7eaca76f68bb61436e6dac&ev=1&ctype=20&ep=YlUi3d%2BWQ%2F5shnijRhmbvlc%2FYJ8QmCsaCWAJ1RRpNbA%3D&ymovie=1", progressCallback: downloadCallback);
               },
             )
           ],

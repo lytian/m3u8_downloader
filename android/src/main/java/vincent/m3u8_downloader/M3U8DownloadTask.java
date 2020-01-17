@@ -2,6 +2,7 @@ package vincent.m3u8_downloader;
 
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -38,6 +39,7 @@ class M3U8DownloadTask {
     //加密Key，默认为空，不加密
     private String encryptKey = null;
     private String m3u8FileName = "local.m3u8";
+    private String keyName = "key.key";
     //文件保存的路径
     private String saveDir;
     //当前下载完成的文件个数
@@ -156,6 +158,7 @@ class M3U8DownloadTask {
             @Override
             public void onSuccess(final M3U8 m3U8) {
                 currentM3U8 = m3U8;
+
                 new Thread() {
                     @Override
                     public void run() {
@@ -169,7 +172,12 @@ class M3U8DownloadTask {
                                 Thread.sleep(100);
                             }
                             if (isRunning) {
-                                File m3u8File = MUtils.createLocalM3U8(new File(saveDir), m3u8FileName, currentM3U8);
+                                File m3u8File;
+                                if (TextUtils.isEmpty(currentM3U8.getKey())) {
+                                    m3u8File = MUtils.createLocalM3U8(new File(saveDir), m3u8FileName, currentM3U8);
+                                } else {
+                                    m3u8File = MUtils.createLocalM3U8(new File(saveDir), m3u8FileName, currentM3U8, keyName);
+                                }
                                 currentM3U8.setM3u8FilePath(m3u8File.getPath());
                                 currentM3U8.setDirFilePath(saveDir);
                                 currentM3U8.getFileSize();
@@ -215,6 +223,14 @@ class M3U8DownloadTask {
         //没有就创建
         if (!dir.exists()) {
             dir.mkdirs();
+        }
+        if (!TextUtils.isEmpty(m3U8.getKey())) {
+            // 保存key文件
+            try {
+                MUtils.saveFile(m3U8.getKey(), saveDir + File.separator + "key.key");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         totalTs = m3U8.getTsList().size();
         if (executor != null) {
