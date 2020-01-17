@@ -68,6 +68,11 @@ class M3u8Downloader {
     });
   }
 
+  static Future<bool> isRunning() async {
+    bool isRunning = await _channel.invokeMethod("isRunning");
+    return isRunning;
+  }
+
   static void pause(String url) async {
     assert(url != null && url != "");
 

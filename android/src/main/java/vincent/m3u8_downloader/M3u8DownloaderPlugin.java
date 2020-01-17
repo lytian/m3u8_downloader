@@ -192,6 +192,8 @@ public class M3u8DownloaderPlugin implements FlutterPlugin, MethodCallHandler {
           }
         });
         result.success(null);
+      } else if (call.method.equals("isRunning")) {
+        result.success(M3U8Downloader.getInstance().isRunning());
       } else if (call.method.equals("pause")) {
         if (!call.hasArgument("url")) {
           result.error("1", "url必传", "");
