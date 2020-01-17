@@ -380,5 +380,4 @@ class M3U8DownloadTask {
         }
         return null;
     }
-
 }

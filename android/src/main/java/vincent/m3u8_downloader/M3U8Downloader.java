@@ -165,13 +165,18 @@ public class M3U8Downloader {
      * @return
      */
     public String getM3U8Path(String url){
-        return m3U8DownLoadTask.getM3u8File(url).getPath();
+        String path;
+        try {
+            path = m3U8DownLoadTask.getM3u8File(url).getPath();
+        } catch (Exception e) {
+            path = MUtils.getSaveFileDir(url) + File.separator + "local.m3u8";
+        }
+        return path;
     }
 
     public boolean isRunning(){
         return m3U8DownLoadTask.isRunning();
     }
-
 
     /**
      *  if task is the current task , it will return true
