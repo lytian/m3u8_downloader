@@ -1,10 +1,18 @@
 package vincent.m3u8_downloader;
 
+import android.app.Activity;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,22 +24,28 @@ import java.util.Map;
 
 import io.flutter.Log;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
+import io.flutter.embedding.engine.plugins.activity.ActivityAware;
+import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.JSONMethodCodec;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
+import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 import vincent.m3u8_downloader.bean.M3U8Task;
 import vincent.m3u8_downloader.utils.MUtils;
 
 /** FlutterM3U8DownloaderPlugin */
-public class M3u8DownloaderPlugin implements FlutterPlugin, MethodCallHandler {
+public class M3u8DownloaderPlugin implements FlutterPlugin, PluginRegistry.NewIntentListener, MethodCallHandler, ActivityAware {
   private static final  String TAG = "M3u8Downloader";
   private static final String CHANNEL_NAME = "vincent/m3u8_downloader";
   public static final String SHARED_PREFERENCES_KEY = "vincent.m3u8.downloader.pref";
   public static final String CALLBACK_DISPATCHER_HANDLE_KEY = "callback_dispatcher_handle_key";
+  private static final String CHANNEL_ID = "M3U8_DOWNLOADER_NOTIFICATION";
+  private static final int NOTIFICATION_ID = 9527;
+  private static final String SELECT_NOTIFICATION = "SELECT_NOTIFICATION";
 
 
   private static M3u8DownloaderPlugin instance;
@@ -40,6 +54,16 @@ public class M3u8DownloaderPlugin implements FlutterPlugin, MethodCallHandler {
   private Handler handler;
   private Object initializationLock = new Object();
   FlutterM3U8BackgroundExecutor flutterM3U8BackgroundExecutor = new FlutterM3U8BackgroundExecutor();
+
+  /**
+   * 通知栏
+   */
+  private boolean showNotification;
+  private NotificationCompat.Builder builder;
+  private String fileName;
+  private int notificationProgress = -1;
+  private boolean isNotificationError = false;
+  private Activity mainActivity;
 
   public static void registerWith(Registrar registrar) {
     Log.e(TAG, "registerWith");
@@ -72,19 +96,18 @@ public class M3u8DownloaderPlugin implements FlutterPlugin, MethodCallHandler {
   public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
     try {
       if (call.method.equals("initialize")) {
-        long callbackHandle = ((JSONArray) call.arguments).getLong(0);
+        long callbackHandle = call.argument("handle");
 
-        flutterM3U8BackgroundExecutor.setCallbackDispatcher(context, callbackHandle);
-        flutterM3U8BackgroundExecutor.startBackgroundIsolate(context);
-        result.success(true);
-      } else if (call.method.equals("config")) {
-        if (!call.hasArgument("saveDir")) {
-          result.error("1", "saveDir必传", "");
-          return;
-        }
         M3U8DownloaderConfig config = M3U8DownloaderConfig.build(context);
-        String saveDir = call.argument("saveDir");
-        config.setSaveDir(saveDir);
+        if (call.hasArgument("saveDir") && call.argument("saveDir") != JSONObject.NULL) {
+          String saveDir = call.argument("saveDir");
+          config.setSaveDir(saveDir);
+        }
+        if (call.hasArgument("showNotification") && call.argument("showNotification") != JSONObject.NULL) {
+          boolean show = call.argument("showNotification");
+          showNotification = show;
+          config.setShowNotification(show);
+        }
         if (call.hasArgument("connTimeout") && call.argument("connTimeout") != JSONObject.NULL) {
           int connTimeout = call.argument("connTimeout");
           config.setConnTimeout(connTimeout);
@@ -97,11 +120,28 @@ public class M3u8DownloaderPlugin implements FlutterPlugin, MethodCallHandler {
           boolean debugMode = call.argument("debugMode");
           config.setDebugMode(debugMode);
         }
+
+        flutterM3U8BackgroundExecutor.setCallbackDispatcher(context, callbackHandle);
+        flutterM3U8BackgroundExecutor.startBackgroundIsolate(context);
+
+        if (showNotification) {
+          buildNotification();
+        }
         result.success(true);
       } else if (call.method.equals("download")) {
         if (!call.hasArgument("url")) {
           result.error("1", "url必传", "");
           return;
+        }
+        boolean showNotification = M3U8DownloaderConfig.isShowNotification();
+        String name = "";
+        if (showNotification) {
+          if (!call.hasArgument("name")) {
+            result.error("1", "name必传", "");
+            return;
+          }
+          name = call.argument("name");
+          this.fileName = name;
         }
         String url = call.argument("url");
 
@@ -109,11 +149,14 @@ public class M3u8DownloaderPlugin implements FlutterPlugin, MethodCallHandler {
         final long successCallbackHandle = call.hasArgument("successCallback") && call.argument("successCallback") != JSONObject.NULL ? (long)call.argument("successCallback") : -1;
         final long errorCallbackHandle = call.hasArgument("errorCallback") && call.argument("errorCallback") != JSONObject.NULL ? (long)call.argument("errorCallback") : -1;
 
-        M3U8Downloader.getInstance().download(url);
+        M3U8Downloader.getInstance().download(url, name);
+        updateNotification(0, 0);
         M3U8Downloader.getInstance().setOnM3U8DownloadListener(new OnM3U8DownloadListener() {
           @Override
           public void onDownloadProgress(final M3U8Task task) {
             super.onDownloadProgress(task);
+
+            updateNotification(1, (int)(task.getProgress() * 100));
             if (progressCallbackHandle != -1) {
               //下载进度，非UI线程
               final Map<String, Object> args = new HashMap<>();
@@ -142,6 +185,7 @@ public class M3u8DownloaderPlugin implements FlutterPlugin, MethodCallHandler {
           @Override
           public void onDownloadSuccess(M3U8Task task) {
             super.onDownloadSuccess(task);
+            updateNotification(2, 100);
             String saveDir = MUtils.getSaveFileDir(task.getUrl());
             final Map<String, Object> args = new HashMap<>();
             args.put("url", task.getUrl());
@@ -181,6 +225,7 @@ public class M3u8DownloaderPlugin implements FlutterPlugin, MethodCallHandler {
           public void onDownloadError(final M3U8Task task, Throwable errorMsg) {
             super.onDownloadError(task, errorMsg);
 
+            updateNotification(3, 0);
             //下载错误，非UI线程
             if (errorCallbackHandle != -1) {
               final Map<String, Object> args = new HashMap<>();
@@ -231,16 +276,151 @@ public class M3u8DownloaderPlugin implements FlutterPlugin, MethodCallHandler {
       }  else {
         result.notImplemented();
       }
-    } catch (JSONException e) {
-      result.error("error", "JSON error: " + e.getMessage(), null);
     } catch (Exception e) {
       result.error("error", "M3u8Downloader error: " + e.getMessage(), null);
     }
   }
+
   @Override
   public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
     context = null;
     channel.setMethodCallHandler(null);
     channel = null;
+  }
+
+  /**
+   *  初始化通知
+   */
+  private void buildNotification() {
+    // Make a channel if necessary
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+      // Create the NotificationChannel, but only on API 26+ because
+      // the NotificationChannel class is new and not in the support library
+
+      CharSequence name = context.getApplicationInfo().loadLabel(context.getPackageManager());
+      int importance = NotificationManager.IMPORTANCE_DEFAULT;
+      NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+      channel.setSound(null, null);
+
+      // Add the channel
+      NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
+
+      if (notificationManager != null) {
+        notificationManager.createNotificationChannel(channel);
+      }
+    }
+
+    if (mainActivity != null) {
+      sendNotificationPayloadMessage(mainActivity.getIntent());
+    }
+
+    // Create the notification
+    builder = new NotificationCompat.Builder(context, CHANNEL_ID)
+//                .setSmallIcon(R.drawable.ic_download)  // 通知图标
+            .setOnlyAlertOnce(true) //
+            .setAutoCancel(true) // 默认不自动取消
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT); // 默认优先级
+
+  }
+
+  /**
+   * 更新通知
+   * @param status 下载状态    0-准备下载   1-正在下载   2-下载成功   3-下载失败
+   * @param progress 下载进度
+   */
+  private void updateNotification(int status, int progress) {
+    if (!showNotification) return;
+    builder.setContentTitle(fileName == null || fileName.equals("") ? "下载M3U8文件" : fileName);
+    System.out.println("status: " + status);
+
+    if (status == 0) {
+      isNotificationError = false;
+      notificationProgress = -1;
+      builder.setContentText("等待下载...").setProgress(0, 0, true);
+      builder.setOngoing(true)
+              .setSmallIcon(android.R.drawable.stat_sys_download_done);
+    } else if (status == 1) {
+      if (isNotificationError) return;
+      // 控制刷新Notification频率
+      if (progress < 100 && (progress - notificationProgress < 2)) {
+        return;
+      }
+      notificationProgress = progress;
+      builder.setContentText("正在下载...")
+              .setProgress(100, progress, false);
+      builder.setOngoing(true)
+              .setSmallIcon(android.R.drawable.stat_sys_download);
+    } else if (status == 2) {
+      // 添加点击回调
+      Intent intent = new Intent(context, getMainActivityClass(context));
+      intent.setAction(SELECT_NOTIFICATION);
+      PendingIntent pendingIntent = PendingIntent.getActivity(context, NOTIFICATION_ID, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+      builder.setContentIntent(pendingIntent);
+
+      builder.setContentText("下载完成").setProgress(0, 0, false);
+      builder.setOngoing(false)
+              .setSmallIcon(android.R.drawable.stat_sys_download_done);
+    } else if (status == 3) {
+      isNotificationError = true;
+      builder.setContentText("下载失败").setProgress(0, 0, false);
+      builder.setOngoing(false)
+              .setSmallIcon(android.R.drawable.stat_sys_download_done);
+    }
+
+    // Show the notification
+    if (showNotification) {
+      NotificationManagerCompat.from(context).notify(NOTIFICATION_ID, builder.build());
+    }
+  }
+
+  private Class getMainActivityClass(Context context) {
+    String packageName = context.getPackageName();
+    Intent launchIntent = context.getPackageManager().getLaunchIntentForPackage(packageName);
+    String className = launchIntent.getComponent().getClassName();
+    try {
+      return Class.forName(className);
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  private Boolean sendNotificationPayloadMessage(Intent intent) {
+    if (SELECT_NOTIFICATION.equals(intent.getAction())) {
+      channel.invokeMethod("selectNotification", null);
+      return true;
+    }
+    return false;
+  }
+
+  @Override
+  public boolean onNewIntent(Intent intent) {
+    boolean res = sendNotificationPayloadMessage(intent);
+    if (res && mainActivity != null) {
+      mainActivity.setIntent(intent);
+    }
+    return res;
+  }
+
+  @Override
+  public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
+    binding.addOnNewIntentListener(this);
+    mainActivity = binding.getActivity();
+  }
+
+  @Override
+  public void onDetachedFromActivityForConfigChanges() {
+    this.mainActivity = null;
+  }
+
+  @Override
+  public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
+    binding.addOnNewIntentListener(this);
+    mainActivity = binding.getActivity();
+  }
+
+  @Override
+  public void onDetachedFromActivity() {
+    this.mainActivity = null;
   }
 }

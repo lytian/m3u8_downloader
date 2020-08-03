@@ -23,6 +23,7 @@ public class M3U8DownloaderConfig {
     private static final String TAG_CONN_TIMEOUT = "TAG_CONN_TIMEOUT_M3U8";
     private static final String TAG_READ_TIMEOUT = "TAG_READ_TIMEOUT_M3U8";
     private static final String TAG_DEBUG = "TAG_DEBUG_M3U8";
+    private static final String TAG_SHOW_NOTIFICATION = "TAG_SHOW_NOTIFICATION_M3U8";
 
     public static M3U8DownloaderConfig build(Context context){
         SPHelper.init(context);
@@ -75,5 +76,14 @@ public class M3U8DownloaderConfig {
 
     public static boolean isDebugMode(){
         return SPHelper.getBoolean(TAG_DEBUG, false);
+    }
+
+    public M3U8DownloaderConfig setShowNotification(boolean show){
+        SPHelper.putBoolean(TAG_SHOW_NOTIFICATION, show);
+        return this;
+    }
+
+    public static boolean isShowNotification(){
+        return SPHelper.getBoolean(TAG_SHOW_NOTIFICATION, true);
     }
 }

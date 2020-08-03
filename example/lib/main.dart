@@ -23,10 +23,21 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    
-    WidgetsFlutterBinding.ensureInitialized();
-    M3u8Downloader.initialize();
+    initAsync();
+  }
 
+  void initAsync() async {
+    WidgetsFlutterBinding.ensureInitialized();
+
+    String saveDir = await _findSavePath();
+    M3u8Downloader.initialize(
+        saveDir: saveDir,
+        debugMode: false,
+        onSelect: () {
+          print('下载成功点击');
+          return null;
+        }
+    );
     // 注册监听器
     IsolateNameServer.registerPortWithName(_port.sendPort, 'downloader_send_port');
     _port.listen((dynamic data) {
@@ -88,36 +99,34 @@ class _MyAppState extends State<MyApp> {
         body: Column(
           children: <Widget>[
             RaisedButton(
-              child: Text("初始化配置"),
-              onPressed: () async {
-                _checkPermission().then((hasGranted) async {
-                  if (hasGranted) {
-                    String saveDir = await _findSavePath();
-                    M3u8Downloader.config(debugMode: true, saveDir: saveDir);
-                  }
-                });
-              },
-            ),
-            RaisedButton(
               child: Text("下载未加密m3u8"),
               onPressed: () {
-                M3u8Downloader.download(
-                  url: "https://videozmcdn.stz8.com:8091/20200229/HNDS-067/index.m3u8",
-                  progressCallback: progressCallback,
-                  successCallback: successCallback,
-                  errorCallback: errorCallback
-                );
-              },
-            ),
+              _checkPermission().then((hasGranted) async {
+                if (hasGranted) {
+                  M3u8Downloader.download(
+                      url: "https://iqiyi.cdn9-okzy.com/20200711/12300_030c6e1d/index.m3u8",
+                      name: "下载未加密m3u8",
+                      progressCallback: progressCallback,
+                      successCallback: successCallback,
+                      errorCallback: errorCallback
+                  );
+                }
+              });
+            }),
             RaisedButton(
               child: Text("下载已加密m3u8"),
               onPressed: () {
-                M3u8Downloader.download(
-                  url: "http://pl-ali.youku.com/playlist/m3u8?ts=1524205957&keyframe=0&m3u8Md5=a85842b9ca4e77db4aa57c314c8e61c7&t1=200&pid=1133275aa6ac0891&vid=XMzU1MDY0NjEyMA==&type=flv&oip=1779113856&sid=0524205957937209643a0&token=2124&did=ae8263a35f7eaca76f68bb61436e6dac&ev=1&ctype=20&ep=YlUi3d%2BWQ%2F5shnijRhmbvlc%2FYJ8QmCsaCWAJ1RRpNbA%3D&ymovie=1",
-                  progressCallback: progressCallback,
-                  successCallback: successCallback,
-                  errorCallback: errorCallback
-                );
+                _checkPermission().then((hasGranted) async {
+                  if (hasGranted) {
+                    M3u8Downloader.download(
+                      url: "http://pl-ali.youku.com/playlist/m3u8?ts=1524205957&keyframe=0&m3u8Md5=a85842b9ca4e77db4aa57c314c8e61c7&t1=200&pid=1133275aa6ac0891&vid=XMzU1MDY0NjEyMA==&type=flv&oip=1779113856&sid=0524205957937209643a0&token=2124&did=ae8263a35f7eaca76f68bb61436e6dac&ev=1&ctype=20&ep=YlUi3d%2BWQ%2F5shnijRhmbvlc%2FYJ8QmCsaCWAJ1RRpNbA%3D&ymovie=1",
+                      name: "下载已加密m3u8",
+                      progressCallback: progressCallback,
+                      successCallback: successCallback,
+                      errorCallback: errorCallback
+                    );
+                  }
+                });
               },
             )
           ],

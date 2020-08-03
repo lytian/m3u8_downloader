@@ -7,31 +7,64 @@ import 'package:flutter/services.dart';
 import 'callback_dispatcher.dart';
 
 typedef CallbackHandle _GetCallbackHandle(Function callback);
+typedef SelectNotificationCallback = Future<dynamic> Function();
 
 class M3u8Downloader {
   static const MethodChannel _channel = const MethodChannel('vincent/m3u8_downloader', JSONMethodCodec());
   static _GetCallbackHandle _getCallbackHandle = (Function callback) => PluginUtilities.getCallbackHandle(callback);
 
+  static SelectNotificationCallback _onSelectNotification;
+
+
   ///  初始化下载器
-  /// 
   ///  在使用之前必须调用
-  static Future<bool> initialize() async {
+  ///
+  /// - [saveDir] 文件保存位置
+  /// - [showNotification] 是否显示通知
+  /// - [connTimeout] 网络连接超时时间
+  /// - [readTimeout] 文件读取超时时间
+  /// - [debugMode] 调试模式
+  /// - [onSelect] 点击通知的回调
+  static Future<bool> initialize({ String saveDir, bool showNotification = true, int connTimeout, int readTimeout, bool debugMode, SelectNotificationCallback onSelect}) async {
     final CallbackHandle handle = _getCallbackHandle(callbackDispatcher);
+
     if (handle == null) {
       return false;
     }
-    final bool r = await _channel.invokeMethod<bool>('initialize', <dynamic>[handle.toRawHandle()]);
+    _onSelectNotification = onSelect;
+    _channel.setMethodCallHandler((MethodCall call) {
+      switch (call.method) {
+        case 'selectNotification':
+          return _onSelectNotification();
+        default:
+          return Future.error('method not defined');
+      }
+    });
+
+
+    final bool r = await _channel.invokeMethod<bool>('initialize',{
+      "handle": handle.toRawHandle(),
+      "saveDir": saveDir,
+      "showNotification": showNotification,
+      "connTimeout": connTimeout,
+      "readTimeout": readTimeout,
+      "debugMode": debugMode
+    });
     return r ?? false;
   }
 
   /// 下载文件
   /// 
   /// - [url] 下载链接地址
-  /// - [callback] 回调函数
-  static void download({String url, Function progressCallback, Function successCallback, Function errorCallback}) async {
+  /// - [name] 下载文件名。(通知标题)
+  /// - [progressCallback] 下载进度回调
+  /// - [successCallback] 下载成功回调
+  /// - [errorCallback] 下载失败回调
+  static void download({String url, String name, Function progressCallback, Function successCallback, Function errorCallback}) async {
     assert(url != null && url != "");
     Map<String, dynamic> params = {
-      "url": url
+      "url": url,
+      "name": name
     };
     if (progressCallback != null) {
       final CallbackHandle handle = _getCallbackHandle(progressCallback);
@@ -53,23 +86,6 @@ class M3u8Downloader {
     }
 
     await _channel.invokeMethod("download", params);
-  }
-
-  /// 配置方法
-  ///
-  /// - [saveDir] 文件保存位置
-  /// - [connTimeout] 网络连接超时时间
-  /// - [readTimeout] 文件读取超时时间
-  /// - [debugMode] 调试模式
-  static void config({ String saveDir, int connTimeout, int readTimeout, bool debugMode}) async {
-    assert(Directory(saveDir).existsSync());
-
-    await _channel.invokeMethod("config", {
-      "saveDir": saveDir,
-      "connTimeout": connTimeout,
-      "readTimeout": readTimeout,
-      "debugMode": debugMode
-    });
   }
 
   /// 暂停下载

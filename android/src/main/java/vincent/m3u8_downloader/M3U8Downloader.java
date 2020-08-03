@@ -1,5 +1,6 @@
 package vincent.m3u8_downloader;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 import androidx.annotation.Nullable;
@@ -22,6 +23,8 @@ import vincent.m3u8_downloader.utils.MUtils;
  * ================================================
  */
 public class M3U8Downloader {
+    private static M3U8Downloader instance = null;
+
 
     private long currentTime;
     private M3U8Task currentM3U8Task;
@@ -30,18 +33,17 @@ public class M3U8Downloader {
     private OnM3U8DownloadListener onM3U8DownloadListener;
 
     private M3U8Downloader() {
+
         downLoadQueue = new DownloadQueue();
         m3U8DownLoadTask = new M3U8DownloadTask();
     }
 
-    private static class SingletonHolder{
-        static M3U8Downloader instance = new M3U8Downloader();
-    }
-
     public static M3U8Downloader getInstance(){
-        return SingletonHolder.instance;
+        if(null == instance){
+            instance = new M3U8Downloader();
+        }
+        return instance;
     }
-
 
     /**
      * 防止快速点击引起ThreadPoolExecutor频繁创建销毁引起crash
@@ -72,14 +74,13 @@ public class M3U8Downloader {
         }
     }
 
-
     /**
      * 下载任务
      * 如果当前任务在下载列表中则认为是暂停
      * 否则入队等候下载
      * @param url
      */
-    public void download(String url){
+    public void download(String url, String name){
         if (TextUtils.isEmpty(url) || isQuicklyClick())return;
         M3U8Task task = new M3U8Task(url);
         if (downLoadQueue.contains(task)){

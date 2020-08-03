@@ -35,6 +35,7 @@ class M3U8DownloadTask {
     private static final int WHAT_ON_PROGRESS = 1002;
     private static final int WHAT_ON_SUCCESS = 1003;
     private static final int WHAT_ON_START_DOWNLOAD = 1004;
+
     private OnTaskDownloadListener onTaskDownloadListener;
     //加密Key，默认为空，不加密
     private String encryptKey = null;
@@ -120,6 +121,7 @@ class M3U8DownloadTask {
     public void download(final String url, OnTaskDownloadListener onTaskDownloadListener) {
         saveDir = MUtils.getSaveFileDir(url);
         M3U8Log.d("start download ,SaveDir: "+ saveDir);
+        mHandler.sendEmptyMessage(WHAT_ON_START_DOWNLOAD);
         this.onTaskDownloadListener = onTaskDownloadListener;
         if (!isRunning()) {
             getM3U8Info(url);
@@ -283,6 +285,7 @@ class M3U8DownloadTask {
                         try {
                             URL url = new URL(m3U8Ts.obtainFullUrl(basePath));
                             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                            conn.addRequestProperty("Referer", "http://xxxxxxxx.com/");
                             conn.setConnectTimeout(connTimeout);
                             conn.setReadTimeout(readTimeout);
                             if (conn.getResponseCode() == 200) {
