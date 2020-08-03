@@ -60,8 +60,9 @@ public class M3u8DownloaderPlugin implements FlutterPlugin, PluginRegistry.NewIn
    */
   private boolean showNotification;
   private NotificationCompat.Builder builder;
+  private NotificationManager notificationManager;
   private String fileName;
-  private int notificationProgress = -1;
+  private int notificationProgress = -100;
   private boolean isNotificationError = false;
   private Activity mainActivity;
 
@@ -247,6 +248,7 @@ public class M3u8DownloaderPlugin implements FlutterPlugin, PluginRegistry.NewIn
         }
         String url = call.argument("url");
         M3U8Downloader.getInstance().pause(url);
+        updateNotification(4, 0);
         result.success(null);
       } else if (call.method.equals("cancel")) {
         if (!call.hasArgument("url")) {
@@ -262,6 +264,9 @@ public class M3u8DownloaderPlugin implements FlutterPlugin, PluginRegistry.NewIn
           M3U8Downloader.getInstance().cancelAndDelete(url, null);
         } else {
           M3U8Downloader.getInstance().pause(url);
+        }
+        if (notificationManager != null) {
+          notificationManager.cancel(NOTIFICATION_ID);
         }
         result.success(null);
       } else if (call.method.equals("isRunning")) {
@@ -303,7 +308,7 @@ public class M3u8DownloaderPlugin implements FlutterPlugin, PluginRegistry.NewIn
       channel.setSound(null, null);
 
       // Add the channel
-      NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
+      notificationManager = context.getSystemService(NotificationManager.class);
 
       if (notificationManager != null) {
         notificationManager.createNotificationChannel(channel);
@@ -325,7 +330,7 @@ public class M3u8DownloaderPlugin implements FlutterPlugin, PluginRegistry.NewIn
 
   /**
    * 更新通知
-   * @param status 下载状态    0-准备下载   1-正在下载   2-下载成功   3-下载失败
+   * @param status 下载状态    0-准备下载   1-正在下载   2-下载成功   3-下载失败   4-已暂停
    * @param progress 下载进度
    */
   private void updateNotification(int status, int progress) {
@@ -334,7 +339,7 @@ public class M3u8DownloaderPlugin implements FlutterPlugin, PluginRegistry.NewIn
 
     if (status == 0) {
       isNotificationError = false;
-      notificationProgress = -1;
+      notificationProgress = -100;
       builder.setContentText("等待下载...").setProgress(0, 0, true);
       builder.setOngoing(true)
               .setSmallIcon(android.R.drawable.stat_sys_download_done);
@@ -364,6 +369,10 @@ public class M3u8DownloaderPlugin implements FlutterPlugin, PluginRegistry.NewIn
       builder.setContentText("下载失败").setProgress(0, 0, false);
       builder.setOngoing(false)
               .setSmallIcon(android.R.drawable.stat_sys_download_done);
+    } else if (status == 4) {
+      builder.setContentText("暂停下载").setProgress(0, 0, false);
+      builder.setOngoing(false)
+              .setSmallIcon(android.R.drawable.stat_sys_download);
     }
 
     // Show the notification
