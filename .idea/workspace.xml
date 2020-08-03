@@ -11,17 +11,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="21e1a017-b691-4068-ba97-9e5411542442" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/M3U8DownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/M3U8DownloadTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/M3U8Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/M3U8Downloader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/M3U8DownloaderConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/M3U8DownloaderConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/M3u8DownloaderPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/M3u8DownloaderPlugin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/m3u8_downloader.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/m3u8_downloader.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,7 +117,14 @@
       <option name="project" value="LOCAL" />
       <updated>1579248238158</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="添加下载进度通知">
+      <created>1596427180282</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1596427180282</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TodoView">
@@ -159,9 +156,14 @@
     <MESSAGE value="更改版本号" />
     <MESSAGE value="添加getM3U8Path方法" />
     <MESSAGE value="修改gradle版本" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改gradle版本" />
+    <MESSAGE value="添加下载进度通知" />
+    <option name="LAST_COMMIT_MESSAGE" value="添加下载进度通知" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="378" y="6" key="CommitChangelistDialog2" timestamp="1596427179058">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="378" y="6" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1596427179058" />
     <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1596189662075">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -182,10 +184,18 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1478" height="206" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1596427069428" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1596427184336">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1596427184336" />
     <state x="100" y="100" width="1336" height="624" key="com.android.tools.idea.avdmanager.AvdListDialog" timestamp="1596423729506">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="100" y="100" width="1336" height="624" key="com.android.tools.idea.avdmanager.AvdListDialog/0.0.1536.824@0.0.1536.824" timestamp="1596423729506" />
+    <state x="391" y="157" width="642" height="534" key="find.popup" timestamp="1596440800783">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="391" y="157" width="642" height="534" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1596440800783" />
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1596427048655">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

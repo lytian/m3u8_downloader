@@ -331,7 +331,6 @@ public class M3u8DownloaderPlugin implements FlutterPlugin, PluginRegistry.NewIn
   private void updateNotification(int status, int progress) {
     if (!showNotification) return;
     builder.setContentTitle(fileName == null || fileName.equals("") ? "下载M3U8文件" : fileName);
-    System.out.println("status: " + status);
 
     if (status == 0) {
       isNotificationError = false;
