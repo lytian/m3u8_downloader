@@ -101,7 +101,7 @@ class M3u8Downloader {
   /// 
   /// - [url] 下载链接地址
   /// - [isDelete] 取消时是否删除文件
-  static void cancel(String url, { bool isDelete }) async {
+  static void cancel(String url, { bool isDelete = false}) async {
     assert(url != null && url != "");
 
     await _channel.invokeMethod("cancel", { "url": url, "isDelete": isDelete });
