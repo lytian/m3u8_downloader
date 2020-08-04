@@ -147,7 +147,14 @@
       <option name="project" value="LOCAL" />
       <updated>1596446385057</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="下载进度中，添加totalSize字段">
+      <created>1596508762714</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1596508762714</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TodoView">
@@ -182,13 +189,14 @@
     <MESSAGE value="添加下载进度通知" />
     <MESSAGE value="删除不必要的调试输出" />
     <MESSAGE value="处理cancel方法的isDelete默认值" />
-    <option name="LAST_COMMIT_MESSAGE" value="处理cancel方法的isDelete默认值" />
+    <MESSAGE value="下载进度中，添加totalSize字段" />
+    <option name="LAST_COMMIT_MESSAGE" value="下载进度中，添加totalSize字段" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="378" y="6" key="CommitChangelistDialog2" timestamp="1596446384257">
+    <state x="378" y="6" key="CommitChangelistDialog2" timestamp="1596508761599">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="378" y="6" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1596446384257" />
+    <state x="378" y="6" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1596508761599" />
     <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1596189662075">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -209,10 +217,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1478" height="206" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1596427069428" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1596446387705">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1596508764423">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1596446387705" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1596508764423" />
     <state x="100" y="100" width="1336" height="624" key="com.android.tools.idea.avdmanager.AvdListDialog" timestamp="1596423729506">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

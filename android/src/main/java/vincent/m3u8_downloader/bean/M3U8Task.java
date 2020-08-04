@@ -48,6 +48,11 @@ public class M3U8Task {
         return m3U8.getFormatFileSize();
     }
 
+    public String getFormatCurrentSize() {
+        if (m3U8 == null)return "";
+        return MUtils.formatFileSize((long)(progress * m3U8.getFileSize()));
+    }
+
     public float getProgress() {
         return progress;
     }
