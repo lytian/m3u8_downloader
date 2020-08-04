@@ -12,7 +12,8 @@
   <component name="ChangeListManager">
     <list default="true" id="21e1a017-b691-4068-ba97-9e5411542442" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/m3u8_downloader.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/m3u8_downloader.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/M3u8DownloaderPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/M3u8DownloaderPlugin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/bean/M3U8Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/bean/M3U8Task.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,7 +23,7 @@
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_3_XL_API_29" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="5032fdba" />
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -139,7 +140,14 @@
       <option name="project" value="LOCAL" />
       <updated>1596446323532</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="处理cancel方法的isDelete默认值">
+      <created>1596446385057</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1596446385057</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TodoView">
@@ -177,10 +185,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="处理cancel方法的isDelete默认值" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="378" y="6" key="CommitChangelistDialog2" timestamp="1596446322679">
+    <state x="378" y="6" key="CommitChangelistDialog2" timestamp="1596446384257">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="378" y="6" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1596446322679" />
+    <state x="378" y="6" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1596446384257" />
     <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1596189662075">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -201,10 +209,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1478" height="206" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1596427069428" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1596446324970">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1596446387705">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1596446324970" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1596446387705" />
     <state x="100" y="100" width="1336" height="624" key="com.android.tools.idea.avdmanager.AvdListDialog" timestamp="1596423729506">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

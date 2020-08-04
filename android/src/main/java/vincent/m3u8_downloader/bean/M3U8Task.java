@@ -38,6 +38,11 @@ public class M3U8Task {
         return MUtils.formatFileSize(speed) + "/s";
     }
 
+    public long getTotalSize() {
+        if (m3U8 == null) return 0;
+        return m3U8.getFileSize();
+    }
+
     public String getFormatTotalSize() {
         if (m3U8 == null)return "";
         return m3U8.getFormatFileSize();

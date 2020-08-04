@@ -166,7 +166,8 @@ public class M3u8DownloaderPlugin implements FlutterPlugin, PluginRegistry.NewIn
               args.put("progress", task.getProgress());
               args.put("speed", task.getSpeed());
               args.put("formatSpeed", task.getFormatSpeed());
-              args.put("totalSize", task.getFormatTotalSize());
+              args.put("totalSize", task.getTotalSize());
+              args.put("totalFormatSize", task.getFormatTotalSize());
               handler.post(new Runnable() {
                 @Override
                 public void run() {
