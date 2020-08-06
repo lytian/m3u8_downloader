@@ -14,6 +14,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -165,13 +166,16 @@ class M3U8DownloadTask {
                     @Override
                     public void run() {
                         try {
-                            startDownload(m3U8);
-                            while (executor != null && !executor.isTerminated()) {
-                                //等待中
-                                Thread.sleep(100);
-                            }
+                            final CountDownLatch latch = new CountDownLatch(m3U8.getTsList().size());
+                            // 开始下载
+                            startDownload(m3U8, latch);
+
+                            // 等待线程执行完毕
+                            latch.await();
+
+                            // 关闭线程池
                             if (executor != null) {
-                                executor.shutdown();//下载完成之后要关闭线程池
+                                executor.shutdown();
                             }
                             if (isRunning) {
                                 File m3u8File;
@@ -220,7 +224,7 @@ class M3U8DownloadTask {
      * 如果任务已经停止、开始下载之前，下一次会判断相关任务目录中已经下载完成的ts文件是否已经下载过了，下载了就不再下载
      * @param m3U8
      */
-    private void startDownload(final M3U8 m3U8) {
+    private void startDownload(final M3U8 m3U8, final CountDownLatch latch) {
         final File dir = new File(saveDir);
         //没有就创建
         if (!dir.exists()) {
@@ -270,7 +274,6 @@ class M3U8DownloadTask {
             executor.execute(new Runnable() {
                 @Override
                 public void run() {
-
                     File file;
                     try {
                         String fileName = M3U8EncryptHelper.encryptFileName(encryptKey, m3U8Ts.obtainEncodeTsFileName());
@@ -286,7 +289,7 @@ class M3U8DownloadTask {
                         try {
                             URL url = new URL(m3U8Ts.obtainFullUrl(basePath));
                             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                            conn.addRequestProperty("Referer", "http://xxxxxxxx.com/");
+//                            conn.addRequestProperty("Referer", "http://xxxxxxxx.com/");
                             conn.setConnectTimeout(connTimeout);
                             conn.setReadTimeout(readTimeout);
                             if (conn.getResponseCode() == 200) {
@@ -332,11 +335,12 @@ class M3U8DownloadTask {
                         m3U8Ts.setFileSize(itemFileSize);
                         mHandler.sendEmptyMessage(WHAT_ON_PROGRESS);
                         curTs++;
-                    }else {
+                    } else {
                         curTs ++;
                         itemFileSize = file.length();
                         m3U8Ts.setFileSize(itemFileSize);
                     }
+                    latch.countDown();
                 }
             });
         }
