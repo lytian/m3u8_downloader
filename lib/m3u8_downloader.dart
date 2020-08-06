@@ -23,9 +23,10 @@ class M3u8Downloader {
   /// - [showNotification] 是否显示通知
   /// - [connTimeout] 网络连接超时时间
   /// - [readTimeout] 文件读取超时时间
+  /// - [threadCount] 同时下载的线程数
   /// - [debugMode] 调试模式
   /// - [onSelect] 点击通知的回调
-  static Future<bool> initialize({ String saveDir, bool showNotification = true, int connTimeout, int readTimeout, bool debugMode, SelectNotificationCallback onSelect}) async {
+  static Future<bool> initialize({ String saveDir, bool showNotification = true, int connTimeout, int readTimeout, int threadCount, bool debugMode, SelectNotificationCallback onSelect}) async {
     final CallbackHandle handle = _getCallbackHandle(callbackDispatcher);
 
     if (handle == null) {
@@ -48,6 +49,7 @@ class M3u8Downloader {
       "showNotification": showNotification,
       "connTimeout": connTimeout,
       "readTimeout": readTimeout,
+      "threadCount": threadCount,
       "debugMode": debugMode
     });
     return r ?? false;

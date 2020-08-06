@@ -166,12 +166,12 @@ class M3U8DownloadTask {
                     public void run() {
                         try {
                             startDownload(m3U8);
-                            if (executor != null) {
-                                executor.shutdown();//下载完成之后要关闭线程池
-                            }
                             while (executor != null && !executor.isTerminated()) {
                                 //等待中
                                 Thread.sleep(100);
+                            }
+                            if (executor != null) {
+                                executor.shutdown();//下载完成之后要关闭线程池
                             }
                             if (isRunning) {
                                 File m3u8File;
@@ -182,7 +182,7 @@ class M3U8DownloadTask {
                                 }
                                 currentM3U8.setM3u8FilePath(m3u8File.getPath());
                                 currentM3U8.setDirFilePath(saveDir);
-                                currentM3U8.getFileSize();
+//                                currentM3U8.getFileSize();
                                 mHandler.sendEmptyMessage(WHAT_ON_SUCCESS);
                                 isRunning = false;
                             }
@@ -232,6 +232,7 @@ class M3U8DownloadTask {
                 MUtils.saveFile(m3U8.getKey(), saveDir + File.separator + "key.key");
             } catch (IOException e) {
                 e.printStackTrace();
+                handlerError(e);
             }
         }
         totalTs = m3U8.getTsList().size();

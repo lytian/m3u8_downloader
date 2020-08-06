@@ -117,6 +117,10 @@ public class M3u8DownloaderPlugin implements FlutterPlugin, PluginRegistry.NewIn
           int readTimeout = call.argument("readTimeout");
           config.setReadTimeout(readTimeout);
         }
+        if (call.hasArgument("threadCount") && call.argument("threadCount") != JSONObject.NULL) {
+          int threadCount = call.argument("threadCount");
+          config.setThreadCount(threadCount);
+        }
         if (call.hasArgument("debugMode") && call.argument("debugMode") != JSONObject.NULL) {
           boolean debugMode = call.argument("debugMode");
           config.setDebugMode(debugMode);

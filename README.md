@@ -39,6 +39,7 @@ M3u8Downloader.initialize();
 /// - [showNotification] 是否显示通知
 /// - [connTimeout] 网络连接超时时间
 /// - [readTimeout] 文件读取超时时间
+/// - [threadCount] 同时下载的线程数
 /// - [debugMode] 调试模式
 /// - [onSelect] 点击通知的回调
 ```
