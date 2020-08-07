@@ -49,6 +49,11 @@ interface OnTaskDownloadListener extends BaseListener {
 
 
     /**
+     * 正在转成MP4格式
+     */
+    void onConverting();
+
+    /**
      * 错误的时候回调
      * 线程环境无法保证，不可以直接在UI线程调用
      * @param errorMsg

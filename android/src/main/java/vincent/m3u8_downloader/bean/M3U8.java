@@ -21,6 +21,7 @@ public class M3U8 {
     private long totalTime;//总时间，单位毫秒
     private List<M3U8Ts> tsList = new ArrayList<M3U8Ts>();//视频切片
     private String key; // m3u8的key
+    private String iv; // m3u8的iv偏移量
 
     public String getBasePath() {
         return basePath;
@@ -90,6 +91,14 @@ public class M3U8 {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public String getIv() {
+        return iv;
+    }
+
+    public void setIv(String iv) {
+        this.iv = iv;
     }
 
     @Override

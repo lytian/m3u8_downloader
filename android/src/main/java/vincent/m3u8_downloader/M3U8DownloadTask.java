@@ -5,6 +5,8 @@ import android.os.Message;
 import android.text.TextUtils;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,8 +22,11 @@ import java.util.concurrent.Executors;
 
 import vincent.m3u8_downloader.bean.M3U8;
 import vincent.m3u8_downloader.bean.M3U8Ts;
+import vincent.m3u8_downloader.utils.AES128Utils;
 import vincent.m3u8_downloader.utils.M3U8Log;
 import vincent.m3u8_downloader.utils.MUtils;
+
+import static vincent.m3u8_downloader.utils.MUtils.readFile;
 
 /**
  * ================================================
@@ -36,6 +41,7 @@ class M3U8DownloadTask {
     private static final int WHAT_ON_PROGRESS = 1002;
     private static final int WHAT_ON_SUCCESS = 1003;
     private static final int WHAT_ON_START_DOWNLOAD = 1004;
+    private static final int WHAT_ON_CONVERT = 1005;
 
     private OnTaskDownloadListener onTaskDownloadListener;
     //加密Key，默认为空，不加密
@@ -88,6 +94,10 @@ class M3U8DownloadTask {
                     onTaskDownloadListener.onError((Throwable) msg.obj);
                     break;
 
+                case WHAT_ON_CONVERT:
+                    onTaskDownloadListener.onConverting();
+                    break;
+
                 case WHAT_ON_START_DOWNLOAD:
                     onTaskDownloadListener.onStartDownload(totalTs, curTs);
                     break;
@@ -124,13 +134,19 @@ class M3U8DownloadTask {
         M3U8Log.d("start download ,SaveDir: "+ saveDir);
         mHandler.sendEmptyMessage(WHAT_ON_START_DOWNLOAD);
         this.onTaskDownloadListener = onTaskDownloadListener;
+        if (M3U8DownloaderConfig.isConvert()) {
+            File file = new File(saveDir + ".mp4");
+            if (file.exists()) {
+                mHandler.sendEmptyMessage(WHAT_ON_SUCCESS);
+                return;
+            }
+        }
         if (!isRunning()) {
             getM3U8Info(url);
         } else {
             handlerError(new Throwable("Task running"));
         }
     }
-
 
     public void setEncryptKey(String encryptKey){
         this.encryptKey = encryptKey;
@@ -139,7 +155,6 @@ class M3U8DownloadTask {
     public String getEncryptKey(){
         return encryptKey;
     }
-
 
     /**
      * 获取任务是否正在执行
@@ -178,15 +193,21 @@ class M3U8DownloadTask {
                                 executor.shutdown();
                             }
                             if (isRunning) {
-                                File m3u8File;
-                                if (TextUtils.isEmpty(currentM3U8.getKey())) {
-                                    m3u8File = MUtils.createLocalM3U8(new File(saveDir), m3u8FileName, currentM3U8);
-                                } else {
-                                    m3u8File = MUtils.createLocalM3U8(new File(saveDir), m3u8FileName, currentM3U8, keyName);
-                                }
-                                currentM3U8.setM3u8FilePath(m3u8File.getPath());
                                 currentM3U8.setDirFilePath(saveDir);
-//                                currentM3U8.getFileSize();
+                                if (M3U8DownloaderConfig.isConvert()) {
+                                    // 转成mp4
+                                    convertMP4(currentM3U8);
+                                } else {
+                                    // 否则生成local.m3u8文件
+                                    File m3u8File;
+                                    if (TextUtils.isEmpty(currentM3U8.getKey())) {
+                                        m3u8File = MUtils.createLocalM3U8(new File(saveDir), m3u8FileName, currentM3U8);
+                                    } else {
+                                        m3u8File = MUtils.createLocalM3U8(new File(saveDir), m3u8FileName, currentM3U8, keyName);
+                                    }
+                                    currentM3U8.setM3u8FilePath(m3u8File.getPath());
+                                }
+
                                 mHandler.sendEmptyMessage(WHAT_ON_SUCCESS);
                                 isRunning = false;
                             }
@@ -300,7 +321,7 @@ class M3U8DownloadTask {
                                 inputStream = conn.getInputStream();
                                 fos = new FileOutputStream(file);//会自动创建文件
                                 int len = 0;
-                                byte[] buf = new byte[8 * 1024 * 1024];
+                                byte[] buf = new byte[1024];
                                 while ((len = inputStream.read(buf)) != -1) {
                                     curLength += len;
                                     fos.write(buf, 0, len);//写入流中
@@ -346,6 +367,79 @@ class M3U8DownloadTask {
         }
     }
 
+    private void convertMP4(final M3U8 m3U8) {
+        mHandler.sendEmptyMessage(WHAT_ON_CONVERT);
+        final File dir = new File(saveDir);
+
+        FileOutputStream fos = null;
+        InputStream inputStream = null;
+        String mp4FilePath = saveDir + ".mp4";
+        File mp4File = new File(mp4FilePath);
+
+        try {
+            fos = new FileOutputStream(mp4File);
+            byte[] bytes;
+            for (final M3U8Ts m3U8Ts : m3U8.getTsList()) {
+                File file;
+                try {
+                    String fileName = M3U8EncryptHelper.encryptFileName(encryptKey, m3U8Ts.obtainEncodeTsFileName());
+                    file = new File(dir + File.separator + fileName);
+                } catch (Exception e) {
+                    file = new File(dir + File.separator + m3U8Ts.getUrl());
+                }
+                // ts片段不存在，直接跳过
+                if(!file.exists())
+                    continue;
+                // 创建流
+                inputStream = new FileInputStream(file);
+                int available = inputStream.available();
+                bytes = new byte[available];
+                if (!TextUtils.isEmpty(m3U8.getKey())) {
+                    // 解密，追加到mp4文件中
+                    fos.write(AES128Utils.decryptTs(bytes, m3U8.getKey(), m3U8.getIv()));
+                } else {
+                    // 追加到mp4文件中
+                    fos.write(bytes, 0, available);
+                }
+                // 关闭流
+                inputStream.close();
+            }
+            // 合并成功，删除m3u8和ts文件
+            if (dir.isDirectory()) {
+                String[] children = dir.list();
+                File childFile = null;
+                for (int i=0; i < children.length; i++) {
+                    childFile = new File(dir, children[i]);
+                    childFile.delete();
+                }
+                dir.delete();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // 关流
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                }
+            }
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                }
+            }
+            if (mp4File.exists() && mp4File.length() == 0) {
+                // 空文件，删除
+                mp4File.delete();
+            }
+        }
+    }
 
     /**
      * 通知异常
@@ -353,6 +447,7 @@ class M3U8DownloadTask {
      * @param e
      */
     private void handlerError(Throwable e) {
+        e.printStackTrace();
         if (!"Task running".equals(e.getMessage())) {
             stop();
         }

@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 
 import vincent.m3u8_downloader.M3U8DownloaderConfig;
@@ -35,12 +36,15 @@ public class MUtils {
      */
     public static M3U8 parseIndex(String url) throws IOException {
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(new URL(url).openStream()));
+        HttpURLConnection connection = (HttpURLConnection)new URL(url).openConnection();
+        connection.addRequestProperty("Connection", "close");
 
-        String basepath = url.substring(0, url.lastIndexOf("/") + 1);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+
+        String basePath = url.substring(0, url.lastIndexOf("/") + 1);
 
         M3U8 ret = new M3U8();
-        ret.setBasePath(basepath);
+        ret.setBasePath(basePath);
 
         String line;
         float seconds = 0;
@@ -63,9 +67,11 @@ public class MUtils {
                                 // 去获取key
                                 v = v.replaceAll("\"", "");
                                 v = v.replaceAll("'", "");
-                                String keyUrl = basepath + v;
+                                String keyUrl = basePath + v;
                                 BufferedReader keyReader = new BufferedReader(new InputStreamReader(new URL(keyUrl).openStream()));
                                 ret.setKey(keyReader.readLine());
+                            } else if (k.equals("IV")) {
+                                ret.setIv(v);
                             }
                         }
                     }
@@ -73,7 +79,7 @@ public class MUtils {
                 continue;
             }
             if (line.endsWith("m3u8")) {
-                return parseIndex(basepath + line);
+                return parseIndex(basePath + line);
             }
             ret.addTs(new M3U8Ts(line, seconds));
             seconds = 0;

@@ -21,12 +21,22 @@ class M3u8Downloader {
   ///
   /// - [saveDir] 文件保存位置
   /// - [showNotification] 是否显示通知
+  /// - [isConvert] 是否转成mp4
   /// - [connTimeout] 网络连接超时时间
   /// - [readTimeout] 文件读取超时时间
   /// - [threadCount] 同时下载的线程数
   /// - [debugMode] 调试模式
   /// - [onSelect] 点击通知的回调
-  static Future<bool> initialize({ String saveDir, bool showNotification = true, int connTimeout, int readTimeout, int threadCount, bool debugMode, SelectNotificationCallback onSelect}) async {
+  static Future<bool> initialize({
+    String saveDir,
+    bool showNotification = true,
+    bool isConvert = true,
+    int connTimeout,
+    int readTimeout,
+    int threadCount,
+    bool debugMode,
+    SelectNotificationCallback onSelect
+  }) async {
     final CallbackHandle handle = _getCallbackHandle(callbackDispatcher);
 
     if (handle == null) {
@@ -47,6 +57,7 @@ class M3u8Downloader {
       "handle": handle.toRawHandle(),
       "saveDir": saveDir,
       "showNotification": showNotification,
+      "isConvert": isConvert,
       "connTimeout": connTimeout,
       "readTimeout": readTimeout,
       "threadCount": threadCount,

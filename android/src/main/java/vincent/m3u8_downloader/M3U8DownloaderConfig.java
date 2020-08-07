@@ -2,7 +2,6 @@ package vincent.m3u8_downloader;
 
 import android.content.Context;
 import android.os.Environment;
-import android.text.TextUtils;
 
 import java.io.File;
 
@@ -24,6 +23,7 @@ public class M3U8DownloaderConfig {
     private static final String TAG_READ_TIMEOUT = "TAG_READ_TIMEOUT_M3U8";
     private static final String TAG_DEBUG = "TAG_DEBUG_M3U8";
     private static final String TAG_SHOW_NOTIFICATION = "TAG_SHOW_NOTIFICATION_M3U8";
+    private static final String TAG_IS_CONVERT = "TAG_IS_CONVERT";
 
     public static M3U8DownloaderConfig build(Context context){
         SPHelper.init(context);
@@ -85,5 +85,14 @@ public class M3U8DownloaderConfig {
 
     public static boolean isShowNotification(){
         return SPHelper.getBoolean(TAG_SHOW_NOTIFICATION, true);
+    }
+
+    public M3U8DownloaderConfig setIsConvert(boolean isConvert){
+        SPHelper.putBoolean(TAG_IS_CONVERT, isConvert);
+        return this;
+    }
+
+    public static boolean isConvert(){
+        return SPHelper.getBoolean(TAG_IS_CONVERT, true);
     }
 }

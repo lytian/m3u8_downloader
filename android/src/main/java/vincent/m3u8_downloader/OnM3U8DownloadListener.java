@@ -41,6 +41,8 @@ public abstract class OnM3U8DownloadListener {
 
     }
 
+    public void onConverting() {}
+
     /**
      * 线程环境无法保证，不可以直接在UI线程调用
      * @param task

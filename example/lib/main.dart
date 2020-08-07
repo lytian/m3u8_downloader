@@ -72,6 +72,7 @@ class _MyAppState extends State<MyApp> {
     if (!root.existsSync()) {
       await root.create();
     }
+    print(saveDir);
     return saveDir;
   }
 
@@ -119,7 +120,7 @@ class _MyAppState extends State<MyApp> {
                 _checkPermission().then((hasGranted) async {
                   if (hasGranted) {
                     M3u8Downloader.download(
-                      url: "http://pl-ali.youku.com/playlist/m3u8?ts=1524205957&keyframe=0&m3u8Md5=a85842b9ca4e77db4aa57c314c8e61c7&t1=200&pid=1133275aa6ac0891&vid=XMzU1MDY0NjEyMA==&type=flv&oip=1779113856&sid=0524205957937209643a0&token=2124&did=ae8263a35f7eaca76f68bb61436e6dac&ev=1&ctype=20&ep=YlUi3d%2BWQ%2F5shnijRhmbvlc%2FYJ8QmCsaCWAJ1RRpNbA%3D&ymovie=1",
+                      url: "http://video.huishenghuo888888.com:8091/jingpin/20200801/D4Jm7KDD/index.m3u8",
                       name: "下载已加密m3u8",
                       progressCallback: progressCallback,
                       successCallback: successCallback,

@@ -1,8 +1,17 @@
 package vincent.m3u8_downloader.utils;
 
+import android.os.Build;
+import android.text.TextUtils;
+
+import androidx.annotation.RequiresApi;
+
+import java.nio.charset.StandardCharsets;
+import java.security.spec.AlgorithmParameterSpec;
+
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
@@ -112,6 +121,28 @@ public class AES128Utils {
         SecretKeySpec sKeySpec = new SecretKeySpec(key, "AES");
         Cipher cipher = Cipher.getInstance("AES");
         cipher.init(Cipher.DECRYPT_MODE, sKeySpec);
+        return cipher.doFinal(bytes);
+    }
+
+    public static byte[] decryptTs(byte[] bytes, String key, String iv) throws  Exception {
+        if (TextUtils.isEmpty(key)) {
+            return bytes;
+        }
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
+        byte[] ivByte;
+        if (!TextUtils.isEmpty(iv)) {
+            if (iv.startsWith("0x"))
+                ivByte = parseHexStr2Byte(iv.substring(2));
+            else ivByte = iv.getBytes();
+            if (ivByte.length != 16)
+                ivByte = new byte[16];
+        } else {
+            ivByte = new byte[16];
+        }
+        SecretKeySpec keySpec = new SecretKeySpec(key.getBytes("utf-8"), "AES");
+        //如果m3u8有IV标签，那么IvParameterSpec构造函数就把IV标签后的内容转成字节数组传进去
+        AlgorithmParameterSpec paramSpec = new IvParameterSpec(ivByte);
+        cipher.init(Cipher.DECRYPT_MODE, keySpec, paramSpec);
         return cipher.doFinal(bytes);
     }
 }

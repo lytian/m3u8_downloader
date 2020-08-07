@@ -351,6 +351,13 @@ public class M3U8Downloader {
         }
 
         @Override
+        public void onConverting() {
+            if (onM3U8DownloadListener != null){
+                onM3U8DownloadListener.onConverting();
+            }
+        }
+
+        @Override
         public void onError(Throwable errorMsg) {
             if (errorMsg.getMessage() != null && errorMsg.getMessage().contains("ENOSPC")){
                 currentM3U8Task.setState(M3U8TaskState.ENOSPC);

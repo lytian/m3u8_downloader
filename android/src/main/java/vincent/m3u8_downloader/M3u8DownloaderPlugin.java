@@ -35,6 +35,7 @@ import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 import vincent.m3u8_downloader.bean.M3U8Task;
+import vincent.m3u8_downloader.utils.MD5Utils;
 import vincent.m3u8_downloader.utils.MUtils;
 
 /** FlutterM3U8DownloaderPlugin */
@@ -125,6 +126,10 @@ public class M3u8DownloaderPlugin implements FlutterPlugin, PluginRegistry.NewIn
           boolean debugMode = call.argument("debugMode");
           config.setDebugMode(debugMode);
         }
+        if (call.hasArgument("isConvert") && call.argument("isConvert") != JSONObject.NULL) {
+          boolean isConvert = call.argument("isConvert");
+          config.setIsConvert(isConvert);
+        }
 
         flutterM3U8BackgroundExecutor.setCallbackDispatcher(context, callbackHandle);
         flutterM3U8BackgroundExecutor.startBackgroundIsolate(context);
@@ -187,6 +192,12 @@ public class M3u8DownloaderPlugin implements FlutterPlugin, PluginRegistry.NewIn
             super.onDownloadItem(task, itemFileSize, totalTs, curTs);
             //下载切片监听，非UI线程
 //          channel.invokeMethod();
+          }
+
+          @Override
+          public void onConverting() {
+            super.onConverting();
+            updateNotification(5, 100);
           }
 
           @Override
@@ -283,7 +294,12 @@ public class M3u8DownloaderPlugin implements FlutterPlugin, PluginRegistry.NewIn
           return;
         }
         String url = call.argument("url");
-        result.success(M3U8Downloader.getInstance().getM3U8Path(url));
+        String baseDir = MUtils.getSaveFileDir(url);
+        Map<String, String> res = new HashMap<>();
+        res.put("baseDir", baseDir);
+        res.put("m3u8", baseDir + File.separator + "local.m3u8");
+        res.put("mp4", M3U8DownloaderConfig.getSaveDir() + File.separator + MD5Utils.encode(url) + ".mp4");
+        result.success(res);
       }  else {
         result.notImplemented();
       }
@@ -336,7 +352,7 @@ public class M3u8DownloaderPlugin implements FlutterPlugin, PluginRegistry.NewIn
 
   /**
    * 更新通知
-   * @param status 下载状态    0-准备下载   1-正在下载   2-下载成功   3-下载失败   4-已暂停
+   * @param status 下载状态    0-准备下载   1-正在下载   2-下载成功   3-下载失败   4-已暂停   5-正在转成MP4
    * @param progress 下载进度
    */
   private void updateNotification(int status, int progress) {
@@ -378,6 +394,10 @@ public class M3u8DownloaderPlugin implements FlutterPlugin, PluginRegistry.NewIn
     } else if (status == 4) {
       builder.setContentText("暂停下载").setProgress(0, 0, false);
       builder.setOngoing(false)
+              .setSmallIcon(android.R.drawable.stat_sys_download);
+    } else if (status == 5) {
+      builder.setContentText("正在转成MP4").setProgress(100, 100, true);
+      builder.setOngoing(true)
               .setSmallIcon(android.R.drawable.stat_sys_download);
     }
 
