@@ -367,6 +367,10 @@ class M3U8DownloadTask {
         }
     }
 
+    /**
+     * M3U8转MP4
+     * @param m3U8
+     */
     private void convertMP4(final M3U8 m3U8) {
         mHandler.sendEmptyMessage(WHAT_ON_CONVERT);
         final File dir = new File(saveDir);
@@ -374,11 +378,16 @@ class M3U8DownloadTask {
         FileOutputStream fos = null;
         InputStream inputStream = null;
         String mp4FilePath = saveDir + ".mp4";
-        File mp4File = new File(mp4FilePath);
+        File mp4File = null;
+        int len = 0;
 
         try {
+            mp4File = new File(mp4FilePath);
+            if (mp4File.exists()) {
+                mp4File.delete();
+            }
             fos = new FileOutputStream(mp4File);
-            byte[] bytes;
+            byte[] bytes = new byte[1024];
             for (final M3U8Ts m3U8Ts : m3U8.getTsList()) {
                 File file;
                 try {
@@ -390,16 +399,21 @@ class M3U8DownloadTask {
                 // ts片段不存在，直接跳过
                 if(!file.exists())
                     continue;
-                // 创建流
                 inputStream = new FileInputStream(file);
-                int available = inputStream.available();
-                bytes = new byte[available];
                 if (!TextUtils.isEmpty(m3U8.getKey())) {
+                    // 加密文件，一次性处理
+                    // 创建流
+                    int available = inputStream.available();
+                    if (bytes.length < available)
+                        bytes = new byte[available];
+                    inputStream.read(bytes);
                     // 解密，追加到mp4文件中
                     fos.write(AES128Utils.decryptTs(bytes, m3U8.getKey(), m3U8.getIv()));
                 } else {
                     // 追加到mp4文件中
-                    fos.write(bytes, 0, available);
+                    while ((len = inputStream.read(bytes)) != -1) {
+                        fos.write(bytes, 0, len);
+                    }
                 }
                 // 关闭流
                 inputStream.close();
@@ -416,10 +430,13 @@ class M3U8DownloadTask {
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            handlerError(e);
         } catch (IOException e) {
             e.printStackTrace();
+            handlerError(e);
         } catch (Exception e) {
             e.printStackTrace();
+            handlerError(e);
         } finally {
             // 关流
             if (inputStream != null) {
@@ -434,7 +451,7 @@ class M3U8DownloadTask {
                 } catch (IOException e) {
                 }
             }
-            if (mp4File.exists() && mp4File.length() == 0) {
+            if (mp4File != null && mp4File.exists() && mp4File.length() == 0) {
                 // 空文件，删除
                 mp4File.delete();
             }

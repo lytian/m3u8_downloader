@@ -35,11 +35,7 @@ public class MUtils {
      * @throws IOException
      */
     public static M3U8 parseIndex(String url) throws IOException {
-
-        HttpURLConnection connection = (HttpURLConnection)new URL(url).openConnection();
-        connection.addRequestProperty("Connection", "close");
-
-        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(new URL(url).openStream()));
 
         String basePath = url.substring(0, url.lastIndexOf("/") + 1);
 

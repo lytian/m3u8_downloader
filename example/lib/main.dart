@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:m3u8_downloader/m3u8_downloader.dart';
+import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -19,6 +20,12 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
 
   ReceivePort _port = ReceivePort();
+
+  // 未加密的url地址
+  String url1 = "https://iqiyi.cdn9-okzy.com/20200711/12300_030c6e1d/index.m3u8";
+  // 加密的url地址
+  String url2 = "http://video.huishenghuo888888.com:8091/jingpin/20200801/D4Jm7KDD/index.m3u8";
+
   
   @override
   void initState() {
@@ -105,7 +112,7 @@ class _MyAppState extends State<MyApp> {
               _checkPermission().then((hasGranted) async {
                 if (hasGranted) {
                   M3u8Downloader.download(
-                      url: "https://iqiyi.cdn9-okzy.com/20200711/12300_030c6e1d/index.m3u8",
+                      url: url1,
                       name: "下载未加密m3u8",
                       progressCallback: progressCallback,
                       successCallback: successCallback,
@@ -120,16 +127,38 @@ class _MyAppState extends State<MyApp> {
                 _checkPermission().then((hasGranted) async {
                   if (hasGranted) {
                     M3u8Downloader.download(
-                      url: "http://video.huishenghuo888888.com:8091/jingpin/20200801/D4Jm7KDD/index.m3u8",
-                      name: "下载已加密m3u8",
-                      progressCallback: progressCallback,
-                      successCallback: successCallback,
-                      errorCallback: errorCallback
+                        url: url2,
+                        name: "下载已加密m3u8",
+                        progressCallback: progressCallback,
+                        successCallback: successCallback,
+                        errorCallback: errorCallback
                     );
                   }
                 });
               },
-            )
+            ),
+            RaisedButton(
+              child: Text("打开已下载的未加密的文件"),
+              onPressed: () async {
+                  var res = await M3u8Downloader.getSavePath(url1);
+                  print(res);
+                  File mp4 = File(res['mp4']);
+                  if (mp4.existsSync()) {
+                    OpenFile.open(res['mp4']);
+                  }
+              },
+            ),
+            RaisedButton(
+              child: Text("打开已下载的已加密的文件"),
+              onPressed: () async {
+                var res = await M3u8Downloader.getSavePath(url2);
+                print(res);
+                File mp4 = File(res['mp4']);
+                if (mp4.existsSync()) {
+                  OpenFile.open(res['mp4']);
+                }
+              },
+            ),
           ],
         ),
       ),

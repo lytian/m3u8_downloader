@@ -140,7 +140,6 @@ public class AES128Utils {
             ivByte = new byte[16];
         }
         SecretKeySpec keySpec = new SecretKeySpec(key.getBytes("utf-8"), "AES");
-        //如果m3u8有IV标签，那么IvParameterSpec构造函数就把IV标签后的内容转成字节数组传进去
         AlgorithmParameterSpec paramSpec = new IvParameterSpec(ivByte);
         cipher.init(Cipher.DECRYPT_MODE, keySpec, paramSpec);
         return cipher.doFinal(bytes);

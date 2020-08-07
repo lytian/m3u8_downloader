@@ -288,7 +288,14 @@ public class M3u8DownloaderPlugin implements FlutterPlugin, PluginRegistry.NewIn
         result.success(null);
       } else if (call.method.equals("isRunning")) {
         result.success(M3U8Downloader.getInstance().isRunning());
-      }  else if (call.method.equals("getM3U8Path")) {
+      } else if (call.method.equals("getM3U8Path")) {
+        if (!call.hasArgument("url")) {
+          result.error("1", "url必传", "");
+          return;
+        }
+        String url = call.argument("url");
+        result.success(M3U8Downloader.getInstance().getM3U8Path(url));
+      } else if (call.method.equals("getSavePath")) {
         if (!call.hasArgument("url")) {
           result.error("1", "url必传", "");
           return;
@@ -300,7 +307,7 @@ public class M3u8DownloaderPlugin implements FlutterPlugin, PluginRegistry.NewIn
         res.put("m3u8", baseDir + File.separator + "local.m3u8");
         res.put("mp4", M3U8DownloaderConfig.getSaveDir() + File.separator + MD5Utils.encode(url) + ".mp4");
         result.success(res);
-      }  else {
+      } else {
         result.notImplemented();
       }
     } catch (Exception e) {

@@ -126,9 +126,18 @@ class M3u8Downloader {
     return isRunning;
   }
 
-  /// 通过url获取保存的路径
+  /// 通过url获取M3U8路径
+  /// - [url] 请求的URL
   static Future<String> getM3U8Path(String url) async {
-    String path = await _channel.invokeMethod("getM3U8Path", { "url": url });
-    return path;
+    return await _channel.invokeMethod("getM3U8Path", { "url": url });
+  }
+
+  /// 通过URL获取保存的路径
+  /// - [url] 请求的URL
+  /// baseDir - 基础文件保存路径
+  /// m3u8 - m3u8文件地址
+  /// mp4 - mp4存储位置
+  static Future<dynamic> getSavePath(String url) async {
+    return await _channel.invokeMethod("getSavePath", { "url": url });
   }
 }

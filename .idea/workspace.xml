@@ -13,16 +13,12 @@
     <list default="true" id="21e1a017-b691-4068-ba97-9e5411542442" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/M3U8DownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/M3U8DownloadTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/M3U8Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/M3U8Downloader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/M3U8DownloaderConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/M3U8DownloaderConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/M3u8DownloaderPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/M3u8DownloaderPlugin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/OnM3U8DownloadListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/OnM3U8DownloadListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/OnTaskDownloadListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/OnTaskDownloadListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/bean/M3U8.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/bean/M3U8.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/utils/AES128Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/utils/AES128Utils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/utils/MUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/utils/MUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/m3u8_downloader.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/m3u8_downloader.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -227,22 +223,22 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1596189662075" />
-    <state width="1342" height="192" key="GridCell.Tab.0.bottom" timestamp="1596708221327">
+    <state width="1342" height="192" key="GridCell.Tab.0.bottom" timestamp="1596809330559">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1342" height="192" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1596708221327" />
-    <state width="1342" height="192" key="GridCell.Tab.0.center" timestamp="1596708221327">
+    <state width="1342" height="192" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1596809330559" />
+    <state width="1342" height="192" key="GridCell.Tab.0.center" timestamp="1596809330559">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1342" height="192" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1596708221327" />
-    <state width="1342" height="192" key="GridCell.Tab.0.left" timestamp="1596708221327">
+    <state width="1342" height="192" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1596809330559" />
+    <state width="1342" height="192" key="GridCell.Tab.0.left" timestamp="1596809330559">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1342" height="192" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1596708221327" />
-    <state width="1342" height="192" key="GridCell.Tab.0.right" timestamp="1596708221327">
+    <state width="1342" height="192" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1596809330559" />
+    <state width="1342" height="192" key="GridCell.Tab.0.right" timestamp="1596809330559">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1342" height="192" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1596708221327" />
+    <state width="1342" height="192" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1596809330559" />
     <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1596703272950">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -255,9 +251,9 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="391" y="157" width="642" height="534" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1596511905509" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1596427048655">
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1596792839811">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1596427048655" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1596792839811" />
   </component>
 </project>
