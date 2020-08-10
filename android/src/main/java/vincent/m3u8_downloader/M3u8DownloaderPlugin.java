@@ -205,10 +205,21 @@ public class M3u8DownloaderPlugin implements FlutterPlugin, PluginRegistry.NewIn
             super.onDownloadSuccess(task);
             updateNotification(2, 100);
             String saveDir = MUtils.getSaveFileDir(task.getUrl());
+            String filePath = "";
+            if (task.getM3U8() != null) {
+              filePath = task.getM3U8().getM3u8FilePath();
+            } else {
+              File mp4File = new File(saveDir + ".mp4");
+              if (mp4File.exists()) {
+                filePath = mp4File.getPath();
+              } else {
+                filePath = saveDir + File.separator + "local.m3u8";
+              }
+            }
             final Map<String, Object> args = new HashMap<>();
             args.put("url", task.getUrl());
             args.put("dir", saveDir);
-            args.put("fileName", saveDir + File.separator + "local.m3u8");
+            args.put("filePath", filePath);
 
             //下载成功
             if (successCallbackHandle != -1) {

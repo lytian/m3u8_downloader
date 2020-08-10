@@ -90,7 +90,7 @@ class _MyAppState extends State<MyApp> {
   }
   static successCallback(dynamic args) {
     final SendPort send = IsolateNameServer.lookupPortByName('downloader_send_port');
-	  send.send({"status": 2, "url": args["url"]});
+	  send.send({"status": 2, "url": args["url"], "filePath": args["filePath"], "dir": args["dir"]});
   }
   static errorCallback(dynamic args) {
     final SendPort send = IsolateNameServer.lookupPortByName('downloader_send_port');

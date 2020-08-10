@@ -196,7 +196,7 @@ class M3U8DownloadTask {
                                 currentM3U8.setDirFilePath(saveDir);
                                 if (M3U8DownloaderConfig.isConvert()) {
                                     // 转成mp4
-                                    convertMP4(currentM3U8);
+                                    convertMP4();
                                 } else {
                                     // 否则生成local.m3u8文件
                                     File m3u8File;
@@ -369,9 +369,8 @@ class M3U8DownloadTask {
 
     /**
      * M3U8转MP4
-     * @param m3U8
      */
-    private void convertMP4(final M3U8 m3U8) {
+    private void convertMP4() {
         mHandler.sendEmptyMessage(WHAT_ON_CONVERT);
         final File dir = new File(saveDir);
 
@@ -388,7 +387,7 @@ class M3U8DownloadTask {
             }
             fos = new FileOutputStream(mp4File);
             byte[] bytes = new byte[1024];
-            for (final M3U8Ts m3U8Ts : m3U8.getTsList()) {
+            for (final M3U8Ts m3U8Ts : currentM3U8.getTsList()) {
                 File file;
                 try {
                     String fileName = M3U8EncryptHelper.encryptFileName(encryptKey, m3U8Ts.obtainEncodeTsFileName());
@@ -400,7 +399,7 @@ class M3U8DownloadTask {
                 if(!file.exists())
                     continue;
                 inputStream = new FileInputStream(file);
-                if (!TextUtils.isEmpty(m3U8.getKey())) {
+                if (!TextUtils.isEmpty(currentM3U8.getKey())) {
                     // 加密文件，一次性处理
                     // 创建流
                     int available = inputStream.available();
@@ -408,7 +407,7 @@ class M3U8DownloadTask {
                         bytes = new byte[available];
                     inputStream.read(bytes);
                     // 解密，追加到mp4文件中
-                    fos.write(AES128Utils.decryptTs(bytes, m3U8.getKey(), m3U8.getIv()));
+                    fos.write(AES128Utils.decryptTs(bytes, currentM3U8.getKey(), currentM3U8.getIv()));
                 } else {
                     // 追加到mp4文件中
                     while ((len = inputStream.read(bytes)) != -1) {
@@ -418,6 +417,8 @@ class M3U8DownloadTask {
                 // 关闭流
                 inputStream.close();
             }
+            // 设置文件路径
+            currentM3U8.setM3u8FilePath(mp4FilePath);
             // 合并成功，删除m3u8和ts文件
             if (dir.isDirectory()) {
                 String[] children = dir.list();
