@@ -420,15 +420,7 @@ class M3U8DownloadTask {
             // 设置文件路径
             currentM3U8.setM3u8FilePath(mp4FilePath);
             // 合并成功，删除m3u8和ts文件
-            if (dir.isDirectory()) {
-                String[] children = dir.list();
-                File childFile = null;
-                for (int i=0; i < children.length; i++) {
-                    childFile = new File(dir, children[i]);
-                    childFile.delete();
-                }
-                dir.delete();
-            }
+            MUtils.clearDir(dir);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             handlerError(e);

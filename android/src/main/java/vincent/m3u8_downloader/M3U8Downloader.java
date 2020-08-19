@@ -252,7 +252,13 @@ public class M3U8Downloader {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                boolean isDelete = MUtils.clearDir(new File(MUtils.getSaveFileDir(url)));
+                String saveDir = MUtils.getSaveFileDir(url);
+                // 删除文件夹
+                boolean isDelete = MUtils.clearDir(new File(saveDir));
+                // 删除mp4文件
+                if (isDelete) {
+                    isDelete = MUtils.clearDir(new File(saveDir + ".mp4"));
+                }
                 if (listener != null) {
                     if (isDelete) {
                         listener.onSuccess();

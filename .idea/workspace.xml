@@ -12,10 +12,6 @@
   <component name="ChangeListManager">
     <list default="true" id="21e1a017-b691-4068-ba97-9e5411542442" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/M3U8DownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/M3U8DownloadTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/M3u8DownloaderPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/M3u8DownloaderPlugin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -170,7 +166,14 @@
       <option name="project" value="LOCAL" />
       <updated>1596703212493</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="下载成功过后的文件路径返回处理">
+      <created>1597065444018</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1597065444018</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TodoView">
@@ -208,37 +211,39 @@
     <MESSAGE value="下载进度中，添加totalSize字段" />
     <MESSAGE value="下载进度中，添加currentFormatSize字段" />
     <MESSAGE value="添加同时下载线程数参数，处理一点BUG" />
-    <option name="LAST_COMMIT_MESSAGE" value="添加同时下载线程数参数，处理一点BUG" />
+    <MESSAGE value="下载成功过后的文件返回" />
+    <MESSAGE value="下载成功过后的文件路径返回处理" />
+    <option name="LAST_COMMIT_MESSAGE" value="下载成功过后的文件路径返回处理" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="378" y="6" key="CommitChangelistDialog2" timestamp="1597065415212">
+    <state x="378" y="6" key="CommitChangelistDialog2" timestamp="1597065443138">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="378" y="6" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1597065415212" />
+    <state x="378" y="6" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1597065443138" />
     <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1596189662075">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1596189662075" />
-    <state width="1493" height="207" key="GridCell.Tab.0.bottom" timestamp="1597065417101">
+    <state width="1493" height="207" key="GridCell.Tab.0.bottom" timestamp="1597065738370">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="207" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1597065417101" />
-    <state width="1493" height="207" key="GridCell.Tab.0.center" timestamp="1597065417100">
+    <state width="1493" height="207" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1597065738370" />
+    <state width="1493" height="207" key="GridCell.Tab.0.center" timestamp="1597065738370">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="207" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1597065417100" />
-    <state width="1493" height="207" key="GridCell.Tab.0.left" timestamp="1597065417100">
+    <state width="1493" height="207" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1597065738370" />
+    <state width="1493" height="207" key="GridCell.Tab.0.left" timestamp="1597065738369">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="207" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1597065417100" />
-    <state width="1493" height="207" key="GridCell.Tab.0.right" timestamp="1597065417101">
+    <state width="1493" height="207" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1597065738369" />
+    <state width="1493" height="207" key="GridCell.Tab.0.right" timestamp="1597065738370">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="207" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1597065417101" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1596703272950">
+    <state width="1493" height="207" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1597065738370" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1597065448335">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1596703272950" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1597065448335" />
     <state x="100" y="100" width="1336" height="624" key="com.android.tools.idea.avdmanager.AvdListDialog" timestamp="1596423729506">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
