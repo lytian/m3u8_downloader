@@ -22,9 +22,9 @@ class _MyAppState extends State<MyApp> {
   ReceivePort _port = ReceivePort();
 
   // 未加密的url地址
-  String url1 = "https://iqiyi.cdn9-okzy.com/20200711/12300_030c6e1d/index.m3u8";
+  String url1 = "https://iqiyi.cdn9-okzy.com/20200711/xxxxxxxxxxxxxxxxxxx/index.m3u8";
   // 加密的url地址
-  String url2 = "http://video.huishenghuo888888.com:8091/jingpin/20200801/D4Jm7KDD/index.m3u8";
+  String url2 = "http://video.huishenghuo888888.com:8091/jingpin/20200801/xxxxxxxxxxxxxxxxx/index.m3u8";
 
   
   @override
