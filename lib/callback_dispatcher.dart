@@ -14,7 +14,7 @@ void callbackDispatcher() {
     final dynamic args = call.arguments;
     final CallbackHandle handle = CallbackHandle.fromRawHandle(args[0]);
 
-    final Function closure = PluginUtilities.getCallbackFromHandle(handle);
+    final Function? closure = PluginUtilities.getCallbackFromHandle(handle);
 
     if (closure == null) {
       print('Fatal: could not find callback');

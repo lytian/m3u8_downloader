@@ -3,7 +3,7 @@ description: Demonstrates how to use the m3u8_downloader plugin.
 publish_to: 'none'
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -11,10 +11,10 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
-  path_provider: ^1.4.4
-  permission_handler: ^4.0.0
-  open_file: ^3.0.1
+  cupertino_icons: ^1.0.3
+  path_provider: ^2.0.2
+  permission_handler: ^8.1.4
+  open_file: ^3.2.1
   m3u8_downloader:
     path: ../
 
