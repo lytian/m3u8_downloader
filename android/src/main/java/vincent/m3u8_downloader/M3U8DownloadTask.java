@@ -26,8 +26,6 @@ import vincent.m3u8_downloader.utils.AES128Utils;
 import vincent.m3u8_downloader.utils.M3U8Log;
 import vincent.m3u8_downloader.utils.MUtils;
 
-import static vincent.m3u8_downloader.utils.MUtils.readFile;
-
 /**
  * ================================================
  * 作    者：JayGoo
@@ -308,7 +306,8 @@ class M3U8DownloadTask {
                         FileOutputStream fos = null;
                         InputStream inputStream = null;
                         try {
-                            URL url = new URL(m3U8Ts.obtainFullUrl(basePath));
+                            String tsUrl = m3U8Ts.obtainFullUrl(basePath);
+                            URL url = new URL(tsUrl);
                             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 //                            conn.addRequestProperty("Referer", "http://xxxxxxxx.com/");
                             conn.setConnectTimeout(connTimeout);

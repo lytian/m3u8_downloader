@@ -44,7 +44,7 @@ public class M3U8InfoManger {
                 try {
                     M3U8 m3u8 = MUtils.parseIndex(url);
                     handlerSuccess(m3u8);
-                } catch (IOException e) {
+                } catch (Exception e) {
                     handlerError(e);
                 }
             }

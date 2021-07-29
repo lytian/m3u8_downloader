@@ -67,6 +67,7 @@ public class M3u8DownloaderPlugin implements FlutterPlugin, PluginRegistry.NewIn
   private boolean isNotificationError = false;
   private Activity mainActivity;
 
+  @SuppressWarnings("deprecation")
   public static void registerWith(Registrar registrar) {
     Log.e(TAG, "registerWith");
     if (instance == null) {

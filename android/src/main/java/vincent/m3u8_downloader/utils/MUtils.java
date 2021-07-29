@@ -8,8 +8,8 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import vincent.m3u8_downloader.M3U8DownloaderConfig;
@@ -34,9 +34,9 @@ public class MUtils {
      * @return
      * @throws IOException
      */
-    public static M3U8 parseIndex(String url) throws IOException {
+    public static M3U8 parseIndex(String url) throws IOException, URISyntaxException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(new URL(url).openStream()));
-
+        URI baseUri = new URI(url);
         String basePath = url.substring(0, url.lastIndexOf("/") + 1);
 
         M3U8 ret = new M3U8();
@@ -63,7 +63,7 @@ public class MUtils {
                                 // 去获取key
                                 v = v.replaceAll("\"", "");
                                 v = v.replaceAll("'", "");
-                                String keyUrl = basePath + v;
+                                String keyUrl = baseUri.resolve(v).toString();
                                 BufferedReader keyReader = new BufferedReader(new InputStreamReader(new URL(keyUrl).openStream()));
                                 ret.setKey(keyReader.readLine());
                             } else if (k.equals("IV")) {
@@ -75,7 +75,7 @@ public class MUtils {
                 continue;
             }
             if (line.endsWith("m3u8")) {
-                return parseIndex(basePath + line);
+                return parseIndex(baseUri.resolve(line).toString());
             }
             ret.addTs(new M3U8Ts(line, seconds));
             seconds = 0;

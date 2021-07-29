@@ -22,9 +22,9 @@ class _MyAppState extends State<MyApp> {
   ReceivePort _port = ReceivePort();
 
   // 未加密的url地址
-  String url1 = "http://videozm.whqhyg.com:8091/20210203/xxxxxxxxxx/index.m3u8";
+  String url1 = "https://videomy.yongaomy.com/20210721/xxxxxxx/index.m3u8";
   // 加密的url地址
-  String url2 = "https://gaoqing.bibi-baidu.com/20190622/xxxxxxxxxx/index.m3u8";
+  String url2 = "https://video.huishenghuo888888.com/douyin/20210722/xxxxxxx/index.m3u8";
 
   @override
   void initState() {
@@ -106,7 +106,6 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             ElevatedButton(
               child: Text("下载未加密m3u8"),
