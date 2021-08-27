@@ -124,6 +124,9 @@ class _MyAppState extends State<MyApp> {
                   // 下载
                   _checkPermission().then((hasGranted) async {
                     if (hasGranted) {
+                      await M3u8Downloader.config(
+                        convertMp4: false,
+                      );
                       setState(() {
                         _downloadingUrl = url1;
                       });
@@ -151,6 +154,9 @@ class _MyAppState extends State<MyApp> {
                 // 下载
                 _checkPermission().then((hasGranted) async {
                   if (hasGranted) {
+                    await M3u8Downloader.config(
+                      convertMp4: true,
+                    );
                     setState(() {
                       _downloadingUrl = url2;
                     });

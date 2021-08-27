@@ -131,24 +131,20 @@ public class M3U8Util {
 
     /**
      * 生成本地m3u8索引文件，ts切片和m3u8文件放在相同目录下即可
-     * @param m3u8Dir m3u8文件夹
      * @param m3U8 m3u8文件
-     * @return m3u8文件
      */
-    public static File createLocalM3U8(File m3u8Dir, String fileName, M3U8 m3U8) throws IOException{
-        return createLocalM3U8(m3u8Dir, fileName, m3U8, null);
+    public static void createLocalM3U8(String fileName, M3U8 m3U8) throws IOException{
+        createLocalM3U8(fileName, m3U8, null);
     }
 
     /**
      * 生成AES-128加密本地m3u8索引文件，ts切片和m3u8文件放在相同目录下即可
-     * @param m3u8Dir m3u8文件夹
      * @param m3U8 m3u8文件
      * @param keyPath 加密key
-     * @return m3u8文件
      */
-    public static File createLocalM3U8(File m3u8Dir, String fileName, M3U8 m3U8, String keyPath) throws IOException{
-        File m3u8File = new File(m3u8Dir, fileName);
-        BufferedWriter bfw = new BufferedWriter(new FileWriter(m3u8File, false));
+    public static void createLocalM3U8(String fileName, M3U8 m3U8, String keyPath) throws IOException{
+        M3U8Log.d("createLocalM3U8: " + fileName);
+        BufferedWriter bfw = new BufferedWriter(new FileWriter(fileName, false));
         bfw.write("#EXTM3U\n");
         bfw.write("#EXT-X-VERSION:3\n");
         bfw.write("#EXT-X-MEDIA-SEQUENCE:0\n");
@@ -162,7 +158,6 @@ public class M3U8Util {
         bfw.write("#EXT-X-ENDLIST");
         bfw.flush();
         bfw.close();
-        return m3u8File;
     }
 
     /**

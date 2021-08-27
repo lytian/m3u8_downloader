@@ -184,13 +184,13 @@ public class M3U8DownloadTask {
                             convertMP4();
                         } else {
                             // 否则生成local.m3u8文件
-                            File m3u8File;
+                            String m3u8Path = saveDir + File.separator + LOCAL_FILE_NAME;
                             if (TextUtils.isEmpty(currentM3U8.getKey())) {
-                                m3u8File = M3U8Util.createLocalM3U8(new File(saveDir), LOCAL_FILE_NAME, currentM3U8);
+                                M3U8Util.createLocalM3U8(m3u8Path, currentM3U8);
                             } else {
-                                m3u8File = M3U8Util.createLocalM3U8(new File(saveDir), LOCAL_FILE_NAME, currentM3U8, M3U8_KEY_NAME);
+                                M3U8Util.createLocalM3U8(m3u8Path, currentM3U8, M3U8_KEY_NAME);
                             }
-                            currentM3U8.setLocalPath(m3u8File.getPath());
+                            currentM3U8.setLocalPath(m3u8Path);
                         }
 
                         mHandler.sendEmptyMessage(WHAT_ON_SUCCESS);
