@@ -3,8 +3,7 @@
   <component name="FrameworkDetectionExcludesConfiguration">
     <type id="android" />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="Android API 26 Platform" project-jdk-type="Android SDK" />
-  <component name="ProjectType">
-    <option name="id" value="io.flutter" />
+  <component name="ProjectRootManager">
+    <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>

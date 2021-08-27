@@ -20,11 +20,12 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
 
   ReceivePort _port = ReceivePort();
+  String? _downloadingUrl;
 
-  // 未加密的url地址
-  String url1 = "https://videomy.yongaomy.com/20210721/xxxxxxx/index.m3u8";
-  // 加密的url地址
-  String url2 = "https://video.huishenghuo888888.com/douyin/20210722/xxxxxxx/index.m3u8";
+  // 未加密的url地址（喜羊羊与灰太狼之决战次时代）
+  String url1 = "https://cdn.605-zy.com/20210713/MiJecHrZ/index.m3u8";
+  // 加密的url地址（火影忍者疾风传）
+  String url2 = "https://v3.dious.cc/20201116/SVGYv7Lo/index.m3u8";
 
   @override
   void initState() {
@@ -33,16 +34,18 @@ class _MyAppState extends State<MyApp> {
   }
 
   void initAsync() async {
-    WidgetsFlutterBinding.ensureInitialized();
-
     String saveDir = await _findSavePath();
     M3u8Downloader.initialize(
-        saveDir: saveDir,
-        debugMode: false,
         onSelect: () async {
           print('下载成功点击');
           return null;
         }
+    );
+    M3u8Downloader.config(
+      saveDir: saveDir,
+      threadCount: 5,
+      convertMp4: true,
+      debugMode: true
     );
     // 注册监听器
     IsolateNameServer.registerPortWithName(_port.sendPort, 'downloader_send_port');
@@ -108,25 +111,49 @@ class _MyAppState extends State<MyApp> {
         body: Column(
           children: <Widget>[
             ElevatedButton(
-              child: Text("下载未加密m3u8"),
-              onPressed: () {
-              _checkPermission().then((hasGranted) async {
-                if (hasGranted) {
-                  M3u8Downloader.download(
-                      url: url1,
-                      name: "下载未加密m3u8",
-                      progressCallback: progressCallback,
-                      successCallback: successCallback,
-                      errorCallback: errorCallback
-                  );
-                }
-              });
-            }),
+                child: Text("${_downloadingUrl == url1 ? '暂停' : '下载'}未加密m3u8"),
+                onPressed: () {
+                  if (_downloadingUrl == url1) {
+                    // 暂停
+                    setState(() {
+                      _downloadingUrl = null;
+                    });
+                    M3u8Downloader.pause(url1);
+                    return;
+                  }
+                  // 下载
+                  _checkPermission().then((hasGranted) async {
+                    if (hasGranted) {
+                      setState(() {
+                        _downloadingUrl = url1;
+                      });
+                      M3u8Downloader.download(
+                          url: url1,
+                          name: "下载未加密m3u8",
+                          progressCallback: progressCallback,
+                          successCallback: successCallback,
+                          errorCallback: errorCallback
+                      );
+                    }
+                  });
+                }),
             ElevatedButton(
-              child: Text("下载已加密m3u8"),
+              child: Text("${_downloadingUrl == url2 ? '暂停' : '下载'}已加密m3u8"),
               onPressed: () {
+                if (_downloadingUrl == url2) {
+                  // 暂停
+                  setState(() {
+                    _downloadingUrl = null;
+                  });
+                  M3u8Downloader.pause(url2);
+                  return;
+                }
+                // 下载
                 _checkPermission().then((hasGranted) async {
                   if (hasGranted) {
+                    setState(() {
+                      _downloadingUrl = url2;
+                    });
                     M3u8Downloader.download(
                         url: url2,
                         name: "下载已加密m3u8",
@@ -141,12 +168,12 @@ class _MyAppState extends State<MyApp> {
             ElevatedButton(
               child: Text("打开已下载的未加密的文件"),
               onPressed: () async {
-                  var res = await M3u8Downloader.getSavePath(url1);
-                  print(res);
-                  File mp4 = File(res['mp4']);
-                  if (mp4.existsSync()) {
-                    OpenFile.open(res['mp4']);
-                  }
+                var res = await M3u8Downloader.getSavePath(url1);
+                print(res);
+                File mp4 = File(res['mp4']);
+                if (mp4.existsSync()) {
+                  OpenFile.open(res['mp4']);
+                }
               },
             ),
             ElevatedButton(
@@ -155,9 +182,18 @@ class _MyAppState extends State<MyApp> {
                 var res = await M3u8Downloader.getSavePath(url2);
                 print(res);
                 File mp4 = File(res['mp4']);
+                print(mp4);
                 if (mp4.existsSync()) {
                   OpenFile.open(res['mp4']);
                 }
+              },
+            ),
+            ElevatedButton(
+              child: Text("清空下载"),
+              onPressed: () async {
+                await M3u8Downloader.delete(url1);
+                await M3u8Downloader.delete(url2);
+                print("清理完成");
               },
             ),
           ],

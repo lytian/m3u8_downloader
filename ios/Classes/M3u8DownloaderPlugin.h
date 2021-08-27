@@ -1,4 +1,4 @@
 #import <Flutter/Flutter.h>
 
-@interface M3u8DownloaderPlugin : NSObject<FlutterPlugin>
+@interface M3U8DownloaderPlugin : NSObject<FlutterPlugin>
 @end

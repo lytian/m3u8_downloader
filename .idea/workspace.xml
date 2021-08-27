@@ -1,302 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AndroidLayouts">
-    <shared>
-      <config />
-    </shared>
-  </component>
-  <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
-    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
-  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="NONE" />
   </component>
-  <component name="BranchesTreeState">
-    <expand>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-    </expand>
-    <select />
-  </component>
   <component name="ChangeListManager">
-    <list default="true" id="21e1a017-b691-4068-ba97-9e5411542442" name="Default Changelist" comment="null安全处理">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/M3U8DownloadTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/M3U8DownloadTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/M3U8InfoManger.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/M3U8InfoManger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/M3u8DownloaderPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/M3u8DownloaderPlugin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/utils/MUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/utils/MUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/m3u8_downloader.iml" beforeDir="false" afterPath="$PROJECT_DIR$/m3u8_downloader.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
-    </list>
+    <list default="true" id="cc4bb8a1-04ea-4593-8779-b0a910b6f6e8" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="DefaultGradleProjectSettings">
-    <option name="isMigrated" value="true" />
-  </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[SerialNumber@5032fdba]" />
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Dart File" />
-      </list>
-    </option>
-  </component>
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="ProjectId" id="1Ze2ZA64EogNbodZpZlNp5QsK9S" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectId" id="1xD9jGU1jukzaJwLjqYAVlE8181" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="dart.analysis.tool.window.force.activate" value="false" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="android.sdk.path" value="E:/Program Files/Android/sdk" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Modules" />
-    <property name="project.structure.proportion" value="0.17" />
-    <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib" />
+    <property name="settings.editor.selected.configurable" value="File.Encoding" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
-  <component name="SvnConfiguration">
-    <configuration />
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Vincent\Desktop\m3u8_downloader\lib" />
+    </key>
   </component>
+  <component name="RunManager" selected="Flutter.example/lib/main.dart">
+    <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/example/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="21e1a017-b691-4068-ba97-9e5411542442" name="Default Changelist" comment="" />
-      <created>1578973544570</created>
+      <changelist id="cc4bb8a1-04ea-4593-8779-b0a910b6f6e8" name="Default Changelist" comment="" />
+      <created>1629878938285</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1578973544570</updated>
+      <updated>1629878938285</updated>
     </task>
-    <task id="LOCAL-00001" summary="M3U8加密文件下载处理">
-      <created>1579230843178</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1579230843178</updated>
-    </task>
-    <task id="LOCAL-00002" summary="修改pub描述">
-      <created>1579231176394</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1579231176394</updated>
-    </task>
-    <task id="LOCAL-00003" summary="修改pub描述">
-      <created>1579231248436</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1579231248436</updated>
-    </task>
-    <task id="LOCAL-00004" summary="添加isRunning方法">
-      <created>1579232155752</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1579232155752</updated>
-    </task>
-    <task id="LOCAL-00005" summary="更改版本号">
-      <created>1579232231329</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1579232231329</updated>
-    </task>
-    <task id="LOCAL-00006" summary="添加getM3U8Path方法">
-      <created>1579232868381</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1579232868381</updated>
-    </task>
-    <task id="LOCAL-00007" summary="修改gradle版本">
-      <created>1579245385609</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1579245385609</updated>
-    </task>
-    <task id="LOCAL-00008" summary="修改gradle版本">
-      <created>1579248238158</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1579248238158</updated>
-    </task>
-    <task id="LOCAL-00009" summary="添加下载进度通知">
-      <created>1596427180282</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1596427180282</updated>
-    </task>
-    <task id="LOCAL-00010" summary="删除不必要的调试输出">
-      <created>1596443901079</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1596443901079</updated>
-    </task>
-    <task id="LOCAL-00011" summary="处理cancel方法的isDelete默认值">
-      <created>1596446323532</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1596446323532</updated>
-    </task>
-    <task id="LOCAL-00012" summary="处理cancel方法的isDelete默认值">
-      <created>1596446385057</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1596446385057</updated>
-    </task>
-    <task id="LOCAL-00013" summary="下载进度中，添加totalSize字段">
-      <created>1596508762714</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1596508762714</updated>
-    </task>
-    <task id="LOCAL-00014" summary="下载进度中，添加currentFormatSize字段">
-      <created>1596508989192</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1596508989192</updated>
-    </task>
-    <task id="LOCAL-00015" summary="添加同时下载线程数参数，处理一点BUG">
-      <created>1596703212493</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1596703212493</updated>
-    </task>
-    <task id="LOCAL-00016" summary="下载成功过后的文件路径返回处理">
-      <created>1597065444018</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1597065444018</updated>
-    </task>
-    <task id="LOCAL-00017" summary="null安全处理">
-      <created>1627010627691</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1627010627691</updated>
-    </task>
-    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
-  <component name="TodoView">
-    <todo-panel id="selected-file">
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-    <todo-panel id="all">
-      <are-packages-shown value="true" />
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-    <option name="oldMeFiltersMigrated" value="true" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="M3U8加密文件下载处理" />
-    <MESSAGE value="修改pub描述" />
-    <MESSAGE value="添加isRunning方法" />
-    <MESSAGE value="更改版本号" />
-    <MESSAGE value="添加getM3U8Path方法" />
-    <MESSAGE value="修改gradle版本" />
-    <MESSAGE value="添加下载进度通知" />
-    <MESSAGE value="删除不必要的调试输出" />
-    <MESSAGE value="处理cancel方法的isDelete默认值" />
-    <MESSAGE value="下载进度中，添加totalSize字段" />
-    <MESSAGE value="下载进度中，添加currentFormatSize字段" />
-    <MESSAGE value="添加同时下载线程数参数，处理一点BUG" />
-    <MESSAGE value="下载成功过后的文件返回" />
-    <MESSAGE value="下载成功过后的文件路径返回处理" />
-    <MESSAGE value="null安全处理" />
-    <option name="LAST_COMMIT_MESSAGE" value="null安全处理" />
-  </component>
   <component name="WindowStateProjectService">
-    <state x="412" y="0" key="CommitChangelistDialog2" timestamp="1627010692674">
+    <state x="570" y="160" key="AndroidProcessChooserDialog" timestamp="1630050134620">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="412" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1627010692674" />
-    <state x="151" y="66" key="DiffContextDialog" timestamp="1627010592148">
+    <state x="570" y="160" key="AndroidProcessChooserDialog/0.0.1536.824@0.0.1536.824" timestamp="1630050134620" />
+    <state width="1493" height="265" key="GridCell.Tab.0.bottom" timestamp="1630052112445">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="151" y="66" key="DiffContextDialog/0.0.1536.824@0.0.1536.824" timestamp="1627010592148" />
-    <state width="1493" height="248" key="GridCell.Tab.0.bottom" timestamp="1627523520573">
+    <state width="1493" height="265" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1630052112445" />
+    <state width="1493" height="265" key="GridCell.Tab.0.center" timestamp="1630052112444">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="248" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1627523520573" />
-    <state width="1493" height="248" key="GridCell.Tab.0.center" timestamp="1627523520573">
+    <state width="1493" height="265" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1630052112444" />
+    <state width="1493" height="265" key="GridCell.Tab.0.left" timestamp="1630052112444">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="248" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1627523520573" />
-    <state width="1493" height="248" key="GridCell.Tab.0.left" timestamp="1627523520573">
+    <state width="1493" height="265" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1630052112444" />
+    <state width="1493" height="265" key="GridCell.Tab.0.right" timestamp="1630052112444">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="248" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1627523520573" />
-    <state width="1493" height="248" key="GridCell.Tab.0.right" timestamp="1627523520573">
+    <state width="1493" height="265" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1630052112444" />
+    <state x="274" y="59" key="SettingsEditor" timestamp="1630027986143">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="248" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1627523520573" />
-    <state x="151" y="67" key="MergeDialog" timestamp="1627011165927">
+    <state x="274" y="59" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1630027986143" />
+    <state x="468" y="144" width="600" height="536" key="find.popup" timestamp="1630032876575">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="151" y="67" key="MergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1627011165927" />
-    <state x="407" y="175" key="MultipleFileMergeDialog" timestamp="1627011167535">
+    <state x="468" y="144" width="600" height="536" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1630032876575" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1630030723054">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="407" y="175" key="MultipleFileMergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1627011167535" />
-    <state x="365" y="147" key="Vcs.Push.Dialog.v2" timestamp="1627011239485">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="365" y="147" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1627011239485" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1630030723054" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
-          <url>file://$PROJECT_DIR$/android/src/main/java/vincent/m3u8_downloader/utils/MUtils.java</url>
-          <line>43</line>
-          <option name="timeStamp" value="1" />
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/m3u8_downloader.dart</url>
+          <line>25</line>
+          <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -1,4 +1,4 @@
-group 'vincent.m3u8_downloader'
+group 'com.vincent.m3u8Downloader'
 version '1.0'
 
 buildscript {
@@ -8,7 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.3'
+        classpath 'com.android.tools.build:gradle:4.1.0'
     }
 }
 
@@ -22,17 +22,10 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 30
 
     defaultConfig {
         minSdkVersion 16
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-    lintOptions {
-        disable 'InvalidPackage'
     }
 }
 
-dependencies {
-    implementation 'androidx.annotation:annotation:1.1.0'
-}

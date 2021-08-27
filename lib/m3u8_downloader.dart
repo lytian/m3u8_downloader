@@ -8,40 +8,28 @@ import 'callback_dispatcher.dart';
 typedef CallbackHandle? _GetCallbackHandle(Function callback);
 typedef SelectNotificationCallback = Future<dynamic> Function();
 
+
 class M3u8Downloader {
   static const MethodChannel _channel = const MethodChannel('vincent/m3u8_downloader', JSONMethodCodec());
   static _GetCallbackHandle _getCallbackHandle = (Function callback) => PluginUtilities.getCallbackHandle(callback);
-
   static SelectNotificationCallback? _onSelectNotification;
+  static bool _initialized = false;
 
 
   ///  初始化下载器
   ///  在使用之前必须调用
   ///
-  /// - [saveDir] 文件保存位置
-  /// - [showNotification] 是否显示通知
-  /// - [isConvert] 是否转成mp4
-  /// - [connTimeout] 网络连接超时时间
-  /// - [readTimeout] 文件读取超时时间
-  /// - [threadCount] 同时下载的线程数
-  /// - [debugMode] 调试模式
   /// - [onSelect] 点击通知的回调
   static Future<bool> initialize({
-    String? saveDir,
-    bool showNotification = true,
-    bool isConvert = true,
-    int? connTimeout,
-    int? readTimeout,
-    int? threadCount,
-    bool? debugMode,
     SelectNotificationCallback? onSelect
   }) async {
-    final CallbackHandle? handle = _getCallbackHandle(callbackDispatcher);
+    assert(!_initialized, 'M3u8Downloader.initialize() must be called only once!');
 
+    final CallbackHandle? handle = _getCallbackHandle(callbackDispatcher);
     if (handle == null) {
       return false;
     }
-    if (showNotification && onSelect != null) {
+    if (onSelect != null) {
       _onSelectNotification = onSelect;
     }
     _channel.setMethodCallHandler((MethodCall call) {
@@ -56,16 +44,39 @@ class M3u8Downloader {
       }
     });
 
-
     final bool? r = await _channel.invokeMethod<bool>('initialize',{
       "handle": handle.toRawHandle(),
+    });
+    _initialized = r ?? false;
+    return _initialized;
+  }
+
+  ///  下载配置
+  ///
+  /// - [saveDir] 文件保存位置
+  /// - [showNotification] 是否显示通知
+  /// - [convertMp4] 是否转成mp4
+  /// - [connTimeout] 网络连接超时时间
+  /// - [readTimeout] 文件读取超时时间
+  /// - [threadCount] 同时下载的线程数
+  /// - [debugMode] 调试模式
+  static Future<bool> config({
+    String? saveDir,
+    bool showNotification = true,
+    bool convertMp4 = false,
+    int? connTimeout,
+    int? readTimeout,
+    int? threadCount,
+    bool? debugMode,
+  }) async {
+    final bool? r = await _channel.invokeMethod<bool>('config',{
       "saveDir": saveDir,
       "showNotification": showNotification,
-      "isConvert": isConvert,
+      "convertMp4": convertMp4,
       "connTimeout": connTimeout,
       "readTimeout": readTimeout,
       "threadCount": threadCount,
-      "debugMode": debugMode
+      "debugMode": debugMode,
     });
     return r ?? false;
   }
@@ -73,7 +84,7 @@ class M3u8Downloader {
   /// 下载文件
   /// 
   /// - [url] 下载链接地址
-  /// - [name] 下载文件名。(通知标题)
+  /// - [name] 下载文件名(通知标题)
   /// - [progressCallback] 下载进度回调
   /// - [successCallback] 下载成功回调
   /// - [errorCallback] 下载失败回调
@@ -85,6 +96,8 @@ class M3u8Downloader {
     Function? errorCallback
   }) async {
     assert(url.isNotEmpty && name.isNotEmpty);
+    assert(_initialized, 'M3u8Downloader.initialize() must be called first!');
+
     Map<String, dynamic> params = {
       "url": url,
       "name": name,
@@ -115,31 +128,29 @@ class M3u8Downloader {
   /// 
   /// - [url] 暂停指定的链接地址
   static void pause(String url) async {
-    assert(url.isNotEmpty);
-
-    await _channel.invokeMethod("pause", { "url": url });
+    assert(_initialized, 'M3u8Downloader.initialize() must be called first!');
+    await _channel.invokeMethod("pause", {
+      "url": url
+    });
   }
 
-  /// 取消下载
+  /// 删除下载
   /// 
   /// - [url] 下载链接地址
-  /// - [isDelete] 取消时是否删除文件
-  static void cancel(String url, { bool isDelete = false}) async {
+  static Future<bool> delete(String url) async {
     assert(url.isNotEmpty);
+    assert(_initialized, 'M3u8Downloader.initialize() must be called first!');
 
-    await _channel.invokeMethod("cancel", { "url": url, "isDelete": isDelete });
+    return await _channel.invokeMethod("delete", {
+      "url": url
+    }) ?? false;
   }
 
   /// 下载状态
   static Future<bool> isRunning() async {
+    assert(_initialized, 'M3u8Downloader.initialize() must be called first!');
     bool isRunning = await _channel.invokeMethod("isRunning");
     return isRunning;
-  }
-
-  /// 通过url获取M3U8路径
-  /// - [url] 请求的URL
-  static Future<String> getM3U8Path(String url) async {
-    return await _channel.invokeMethod("getM3U8Path", { "url": url });
   }
 
   /// 通过URL获取保存的路径
