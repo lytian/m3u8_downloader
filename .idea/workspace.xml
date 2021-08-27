@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cc4bb8a1-04ea-4593-8779-b0a910b6f6e8" name="Default Changelist" comment="refactor: 重构整体代码">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="cc4bb8a1-04ea-4593-8779-b0a910b6f6e8" name="Default Changelist" comment="refactor: idea配置">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,10 +25,10 @@
     <property name="ASKED_MARK_IGNORED_FILES_AS_EXCLUDED" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="android.sdk.path" value="E:/Program Files/Android/sdk" />
+    <property name="android.sdk.path" value="$PROJECT_DIR$/../../Program Files/Android/sdk" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
@@ -59,26 +59,34 @@
       <option name="project" value="LOCAL" />
       <updated>1630052401707</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="refactor: idea配置">
+      <created>1630053548666</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1630053548666</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="refactor: 重构整体代码" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor: 重构整体代码" />
+    <MESSAGE value="refactor: idea配置" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor: idea配置" />
   </component>
   <component name="WindowStateProjectService">
     <state x="570" y="160" key="AndroidProcessChooserDialog" timestamp="1630050134620">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="570" y="160" key="AndroidProcessChooserDialog/0.0.1536.824@0.0.1536.824" timestamp="1630050134620" />
-    <state x="199" y="0" key="CommitChangelistDialog2" timestamp="1630053531147">
+    <state x="199" y="0" key="CommitChangelistDialog2" timestamp="1630055287649">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="199" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1630053531147" />
-    <state x="0" y="66" key="DiffContextDialog" timestamp="1630053527253">
+    <state x="199" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1630055287649" />
+    <state x="0" y="66" key="DiffContextDialog" timestamp="1630055286805">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="0" y="66" key="DiffContextDialog/0.0.1536.824@0.0.1536.824" timestamp="1630053527253" />
+    <state x="0" y="66" key="DiffContextDialog/0.0.1536.824@0.0.1536.824" timestamp="1630055286805" />
     <state width="1493" height="265" key="GridCell.Tab.0.bottom" timestamp="1630052112445">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -95,14 +103,14 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1493" height="265" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1630052112444" />
-    <state x="274" y="59" key="SettingsEditor" timestamp="1630053462997">
+    <state x="274" y="59" key="SettingsEditor" timestamp="1630053858564">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="274" y="59" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1630053462997" />
-    <state x="365" y="147" key="Vcs.Push.Dialog.v2" timestamp="1630053506431">
+    <state x="274" y="59" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1630053858564" />
+    <state x="365" y="147" key="Vcs.Push.Dialog.v2" timestamp="1630053550545">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="365" y="147" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1630053506431" />
+    <state x="365" y="147" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1630053550545" />
     <state x="577" y="327" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1630053464790">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -125,7 +133,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
           <url>file://$PROJECT_DIR$/lib/m3u8_downloader.dart</url>
-          <line>25</line>
+          <line>26</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
