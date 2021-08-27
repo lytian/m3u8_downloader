@@ -4,11 +4,17 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cc4bb8a1-04ea-4593-8779-b0a910b6f6e8" name="Default Changelist" comment="" />
+    <list default="true" id="cc4bb8a1-04ea-4593-8779-b0a910b6f6e8" name="Default Changelist" comment="refactor: 重构整体代码">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1xD9jGU1jukzaJwLjqYAVlE8181" />
   <component name="ProjectViewState">
@@ -16,12 +22,14 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_MARK_IGNORED_FILES_AS_EXCLUDED" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android.sdk.path" value="E:/Program Files/Android/sdk" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/lib" />
-    <property name="settings.editor.selected.configurable" value="File.Encoding" />
+    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RecentsManager">
@@ -44,13 +52,33 @@
       <option name="presentableId" value="Default" />
       <updated>1629878938285</updated>
     </task>
+    <task id="LOCAL-00001" summary="refactor: 重构整体代码">
+      <created>1630052401707</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1630052401707</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="refactor: 重构整体代码" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor: 重构整体代码" />
   </component>
   <component name="WindowStateProjectService">
     <state x="570" y="160" key="AndroidProcessChooserDialog" timestamp="1630050134620">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="570" y="160" key="AndroidProcessChooserDialog/0.0.1536.824@0.0.1536.824" timestamp="1630050134620" />
+    <state x="199" y="0" key="CommitChangelistDialog2" timestamp="1630053531147">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="199" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1630053531147" />
+    <state x="0" y="66" key="DiffContextDialog" timestamp="1630053527253">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="0" y="66" key="DiffContextDialog/0.0.1536.824@0.0.1536.824" timestamp="1630053527253" />
     <state width="1493" height="265" key="GridCell.Tab.0.bottom" timestamp="1630052112445">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -67,14 +95,26 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1493" height="265" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1630052112444" />
-    <state x="274" y="59" key="SettingsEditor" timestamp="1630027986143">
+    <state x="274" y="59" key="SettingsEditor" timestamp="1630053462997">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="274" y="59" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1630027986143" />
+    <state x="274" y="59" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1630053462997" />
+    <state x="365" y="147" key="Vcs.Push.Dialog.v2" timestamp="1630053506431">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="365" y="147" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1630053506431" />
+    <state x="577" y="327" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1630053464790">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="577" y="327" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1630053464790" />
     <state x="468" y="144" width="600" height="536" key="find.popup" timestamp="1630032876575">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="468" y="144" width="600" height="536" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1630032876575" />
+    <state x="551" y="314" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1630052984142">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="551" y="314" key="git4idea.remote.GitConfigureRemotesDialog/0.0.1536.824@0.0.1536.824" timestamp="1630052984142" />
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1630030723054">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
