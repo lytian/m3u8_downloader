@@ -219,6 +219,7 @@ public class M3U8Downloader {
 
         @Override
         public void onError(Throwable error) {
+            error.printStackTrace();
             if (error.getMessage() != null && error.getMessage().contains("ENOSPC")){
                 currentM3U8Task.setState(M3U8TaskState.ENOSPC);
             }else {

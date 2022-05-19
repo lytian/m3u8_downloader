@@ -12,8 +12,8 @@ dependencies:
   flutter:
     sdk: flutter
 
-  path_provider: ^2.0.2
-  permission_handler: ^8.1.4+2
+  path_provider: ^2.0.10
+  permission_handler: ^9.2.0
   open_file: ^3.2.1
   m3u8_downloader:
     # When depending on this package from a real application you should use:

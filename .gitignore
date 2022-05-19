@@ -1,5 +1,10 @@
 .DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
 .dart_tool/
+.idea/
 
 .packages
 .pub/

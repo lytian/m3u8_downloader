@@ -23,7 +23,7 @@ class _MyAppState extends State<MyApp> {
   String? _downloadingUrl;
 
   // 未加密的url地址（喜羊羊与灰太狼之决战次时代）
-  String url1 = "https://cdn.605-zy.com/20210713/MiJecHrZ/index.m3u8";
+  String url1 = "https://new.iskcd.com/20220420/XNihn9Om/index.m3u8";
   // 加密的url地址（火影忍者疾风传）
   String url2 = "https://v3.dious.cc/20201116/SVGYv7Lo/index.m3u8";
 
@@ -43,7 +43,7 @@ class _MyAppState extends State<MyApp> {
     );
     M3u8Downloader.config(
       saveDir: saveDir,
-      threadCount: 5,
+      threadCount: 2,
       convertMp4: true,
       debugMode: true
     );
@@ -155,7 +155,7 @@ class _MyAppState extends State<MyApp> {
                 _checkPermission().then((hasGranted) async {
                   if (hasGranted) {
                     await M3u8Downloader.config(
-                      convertMp4: true,
+                      convertMp4: false,
                     );
                     setState(() {
                       _downloadingUrl = url2;

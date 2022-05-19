@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/m3u8_downloader.iml" filepath="$PROJECT_DIR$/m3u8_downloader.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/m3u8_downloader_android.iml" filepath="$PROJECT_DIR$/android/m3u8_downloader_android.iml" />
     </modules>
   </component>
 </project>

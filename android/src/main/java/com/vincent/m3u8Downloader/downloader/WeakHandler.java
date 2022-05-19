@@ -1,3 +1,27 @@
+/*
+ * Copyright (c) 2014 Badoo Trading Limited
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * Portions of documentation in this code are modifications based on work created and
+ * shared by Android Open Source Project and used according to terms described in the
+ * Apache License, Version 2.0
+ */
 package com.vincent.m3u8Downloader.downloader;
 
 import android.os.Handler;
@@ -23,11 +47,10 @@ import java.util.concurrent.locks.ReentrantLock;
  * and GC could collect them once WeakHandler instance is not referenced any more
  * <p/>
  *
- * @see Handler
+ * @see android.os.Handler
  *
  * Created by Dmytro Voronkevych on 17/06/2014.
  */
-@SuppressWarnings("unused")
 public class WeakHandler {
     private final Handler.Callback mCallback; // hard reference to Callback. We need to keep callback in memory
     private final ExecHandler mExec;
@@ -233,7 +256,7 @@ public class WeakHandler {
     /**
      * Sends a Message containing only the what value, to be delivered
      * after the specified amount of time elapses.
-     * @see #sendMessageDelayed(Message, long)
+     * @see #sendMessageDelayed(android.os.Message, long)
      *
      * @return Returns true if the message was successfully placed in to the
      *         message queue.  Returns false on failure, usually because the
@@ -246,7 +269,7 @@ public class WeakHandler {
     /**
      * Sends a Message containing only the what value, to be delivered
      * at a specific time.
-     * @see #sendMessageAtTime(Message, long)
+     * @see #sendMessageAtTime(android.os.Message, long)
      *
      * @return Returns true if the message was successfully placed in to the
      *         message queue.  Returns false on failure, usually because the
@@ -367,15 +390,13 @@ public class WeakHandler {
     }
 
     private static class ExecHandler extends Handler {
-        private final WeakReference<Callback> mCallback;
+        private final WeakReference<Handler.Callback> mCallback;
 
-        @SuppressWarnings("deprecation")
         ExecHandler() {
             mCallback = null;
         }
 
-        @SuppressWarnings("deprecation")
-        ExecHandler(WeakReference<Callback> callback) {
+        ExecHandler(WeakReference<Handler.Callback> callback) {
             mCallback = callback;
         }
 
@@ -384,7 +405,7 @@ public class WeakHandler {
             mCallback = null;
         }
 
-        ExecHandler(Looper looper, WeakReference<Callback> callback) {
+        ExecHandler(Looper looper, WeakReference<Handler.Callback> callback) {
             super(looper);
             mCallback = callback;
         }
@@ -394,7 +415,7 @@ public class WeakHandler {
             if (mCallback == null) {
                 return;
             }
-            final Callback callback = mCallback.get();
+            final Handler.Callback callback = mCallback.get();
             if (callback == null) { // Already disposed
                 return;
             }

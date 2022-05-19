@@ -15,6 +15,7 @@ import com.vincent.m3u8Downloader.bean.M3U8TaskState;
 import com.vincent.m3u8Downloader.downloader.M3U8DownloadConfig;
 import com.vincent.m3u8Downloader.downloader.M3U8DownloadTask;
 import com.vincent.m3u8Downloader.downloader.M3U8Downloader;
+import com.vincent.m3u8Downloader.downloader.WeakHandler;
 import com.vincent.m3u8Downloader.listener.OnM3U8DownloadListener;
 import com.vincent.m3u8Downloader.utils.M3U8Log;
 import com.vincent.m3u8Downloader.utils.M3U8Util;
@@ -44,7 +45,7 @@ public class M3U8DownloaderPlugin implements FlutterPlugin, MethodCallHandler, P
   private MethodChannel channel;
   private Context context;
   private Activity mainActivity;
-  private Handler handler;
+  private WeakHandler handler;
   private final Object initializationLock = new Object();
   private boolean showNotification = true;
   private final FlutterBackgroundExecutor backgroundExecutor = new FlutterBackgroundExecutor();
@@ -65,7 +66,7 @@ public class M3U8DownloaderPlugin implements FlutterPlugin, MethodCallHandler, P
         return;
       }
       this.context = applicationContext;
-      handler = new Handler(Looper.getMainLooper());
+      handler = new WeakHandler(Looper.getMainLooper());
 
       channel = new MethodChannel( messenger, CHANNEL_NAME, JSONMethodCodec.INSTANCE);
       channel.setMethodCallHandler(this);
@@ -289,6 +290,7 @@ public class M3U8DownloaderPlugin implements FlutterPlugin, MethodCallHandler, P
 
     @Override
     public void onDownloadError(M3U8Task task, Throwable error) {
+      error.printStackTrace();
       if (showNotification) {
         NotificationUtil.getInstance().updateNotification(fileName, task.getState(), Math.round(task.getProgress() * 100));
       }

@@ -1,7 +1,4 @@
 package com.vincent.m3u8Downloader.downloader;
-
-import android.os.Handler;
-import android.os.Message;
 import android.text.TextUtils;
 
 import com.vincent.m3u8Downloader.bean.M3U8;
@@ -28,6 +25,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @Author: Vincent
@@ -39,12 +37,6 @@ public class M3U8DownloadTask {
     public static final String LOCAL_FILE_NAME = "local.m3u8";
     public static final String M3U8_KEY_NAME = "key.key";
 
-    private static final int WHAT_ON_ERROR = 1001;
-    private static final int WHAT_ON_PROGRESS = 1002;
-    private static final int WHAT_ON_SUCCESS = 1003;
-    private static final int WHAT_ON_START_DOWNLOAD = 1004;
-    private static final int WHAT_ON_CONVERT = 1005;
-
     // 文件保存地址
     private String saveDir;
     // 当前M3U8
@@ -55,10 +47,10 @@ public class M3U8DownloadTask {
     private Timer netSpeedTimer;
     // 任务是否正在运行
     private boolean isRunning = false;
-    // 当前已经在下完成的大小
-    private long curLength = 0;
     // 当前下载完成的文件个数
     private final AtomicInteger curTs = new AtomicInteger(0);
+    // 当前已经在下完成的大小
+    private final AtomicLong curLength = new AtomicLong(0);
     // 总文件个数
     private volatile int totalTs = 0;
     // 单个文件的大小
@@ -68,34 +60,6 @@ public class M3U8DownloadTask {
     int connTimeout;
     int readTimeout;
     int threadCount;
-
-    private final WeakHandler mHandler = new WeakHandler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(Message msg) {
-            switch (msg.what) {
-                case WHAT_ON_START_DOWNLOAD:
-                    onTaskDownloadListener.onStartDownload(totalTs, curTs.get());
-                    M3U8Log.d("start download, save dir: " + saveDir);
-                    break;
-                case WHAT_ON_PROGRESS:
-                    onTaskDownloadListener.onDownloadItem(itemFileSize, totalTs, curTs.get());
-                    break;
-                case WHAT_ON_CONVERT:
-                    onTaskDownloadListener.onConvert();
-                    break;
-                case WHAT_ON_SUCCESS:
-                    if (netSpeedTimer != null) {
-                        netSpeedTimer.cancel();
-                    }
-                    onTaskDownloadListener.onSuccess(currentM3U8);
-                    break;
-                case WHAT_ON_ERROR:
-                    onTaskDownloadListener.onError((Throwable) msg.obj);
-                    break;
-            }
-            return true;
-        }
-    });
 
     public M3U8DownloadTask() {
         connTimeout = M3U8DownloadConfig.getConnTimeout();
@@ -120,7 +84,10 @@ public class M3U8DownloadTask {
             File file = new File(saveDir + ".mp4");
             // 已存在MP4文件，则已完成
             if (file.exists()) {
-                mHandler.sendEmptyMessage(WHAT_ON_SUCCESS);
+                if (netSpeedTimer != null) {
+                    netSpeedTimer.cancel();
+                }
+                onTaskDownloadListener.onSuccess(currentM3U8);
                 return;
             }
         }
@@ -161,7 +128,8 @@ public class M3U8DownloadTask {
      */
     private void start(final M3U8 m3u8) {
         currentM3U8 = m3u8;
-        mHandler.sendEmptyMessage(WHAT_ON_START_DOWNLOAD);
+        onTaskDownloadListener.onStartDownload(totalTs, curTs.get());
+        M3U8Log.d("start download, save dir: " + saveDir);
         new Thread() {
             @Override
             public void run() {
@@ -193,7 +161,10 @@ public class M3U8DownloadTask {
                             currentM3U8.setLocalPath(m3u8Path);
                         }
 
-                        mHandler.sendEmptyMessage(WHAT_ON_SUCCESS);
+                        if (netSpeedTimer != null) {
+                            netSpeedTimer.cancel();
+                        }
+                        onTaskDownloadListener.onSuccess(currentM3U8);
                         isRunning = false;
                     }
                 } catch (InterruptedIOException e) {
@@ -222,7 +193,7 @@ public class M3U8DownloadTask {
         if (!TextUtils.isEmpty(m3u8.getKey())) {
             // 保存key文件
             try {
-                M3U8Util.saveFile(m3u8.getKey(), saveDir + File.separator + "key.key");
+                M3U8Util.saveFile(m3u8.getKey(), saveDir + File.separator + M3U8_KEY_NAME);
             } catch (IOException e) {
                 handlerError(e);
             }
@@ -237,6 +208,7 @@ public class M3U8DownloadTask {
         executor = Executors.newFixedThreadPool(threadCount);
 
         curTs.set(0);
+        curLength.set(0);
         isRunning = true;
         // 重置网速定时器
         if (netSpeedTimer != null) {
@@ -246,7 +218,7 @@ public class M3U8DownloadTask {
         netSpeedTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-            onTaskDownloadListener.onProgress(curLength);
+            onTaskDownloadListener.onProgress(curLength.get());
             }
         }, 0, 1500);
 
@@ -279,7 +251,6 @@ public class M3U8DownloadTask {
                                 int len;
                                 byte[] buf = new byte[1024];
                                 while ((len = inputStream.read(buf)) != -1) {
-                                    curLength += len;
                                     fos.write(buf, 0, len);//写入流中
                                 }
                             } else {
@@ -311,13 +282,11 @@ public class M3U8DownloadTask {
                                 }
                             }
                         }
-                        itemFileSize = file.length();
-                        m3u8Ts.setFileSize(itemFileSize);
-                        mHandler.sendEmptyMessage(WHAT_ON_PROGRESS);
-                    } else {
-                        itemFileSize = file.length();
-                        m3u8Ts.setFileSize(itemFileSize);
+                        curLength.set(curLength.get() + file.length());
+                        onTaskDownloadListener.onDownloadItem(itemFileSize, totalTs, curTs.get());
                     }
+                    itemFileSize = file.length();
+                    m3u8Ts.setFileSize(itemFileSize);
                     curTs.incrementAndGet();
                     latch.countDown();
                 }
@@ -329,7 +298,6 @@ public class M3U8DownloadTask {
      * M3U8转MP4
      */
     private void convertMP4() {
-        mHandler.sendEmptyMessage(WHAT_ON_CONVERT);
         final File dir = new File(saveDir);
 
         FileOutputStream fos = null;
@@ -404,6 +372,7 @@ public class M3U8DownloadTask {
                 mp4File.delete();
             }
         }
+        onTaskDownloadListener.onConvert();
     }
 
     /**
@@ -435,10 +404,7 @@ public class M3U8DownloadTask {
             return;
         }
         e.printStackTrace();
-        Message msg = Message.obtain();
-        msg.obj = e;
-        msg.what = WHAT_ON_ERROR;
-        mHandler.sendMessage(msg);
+        onTaskDownloadListener.onError(e);
     }
 
     /**
