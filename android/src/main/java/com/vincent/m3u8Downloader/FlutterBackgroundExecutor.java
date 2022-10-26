@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 
+import androidx.annotation.NonNull;
+
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import io.flutter.Log;
@@ -46,7 +48,7 @@ public class FlutterBackgroundExecutor implements MethodChannel.MethodCallHandle
     }
 
     @Override
-    public void onMethodCall(MethodCall call, MethodChannel.Result result) {
+    public void onMethodCall(MethodCall call, @NonNull MethodChannel.Result result) {
         String method = call.method;
         if (method.equals("didInitializeDispatcher")) {
             onInitialized();
@@ -61,7 +63,6 @@ public class FlutterBackgroundExecutor implements MethodChannel.MethodCallHandle
             SharedPreferences p = context.getSharedPreferences(SHARED_PREFERENCES_KEY, 0);
             long callbackHandle = p.getLong(CALLBACK_DISPATCHER_HANDLE_KEY, 0);
             startBackgroundIsolate(context, callbackHandle);
-
         }
     }
 

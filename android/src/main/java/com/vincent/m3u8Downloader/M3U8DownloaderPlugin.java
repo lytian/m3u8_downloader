@@ -3,7 +3,6 @@ package com.vincent.m3u8Downloader;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
 import android.os.Looper;
 
 import androidx.annotation.NonNull;
@@ -37,6 +36,7 @@ import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry;
+import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 /** M3U8DownloaderPlugin */
 public class M3U8DownloaderPlugin implements FlutterPlugin, MethodCallHandler, PluginRegistry.NewIntentListener, ActivityAware {
@@ -54,6 +54,12 @@ public class M3U8DownloaderPlugin implements FlutterPlugin, MethodCallHandler, P
   private long progressCallbackHandle = -1;
   private long successCallbackHandle = -1;
   private long errorCallbackHandle = -1;
+
+  @SuppressWarnings("deprecation")
+  public static void registerWith(Registrar registrar) {
+    final M3U8DownloaderPlugin instance = new M3U8DownloaderPlugin();
+    instance.onAttachedToEngine(registrar.context(), registrar.messenger());
+  }
 
   @Override
   public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
@@ -73,6 +79,7 @@ public class M3U8DownloaderPlugin implements FlutterPlugin, MethodCallHandler, P
     }
   }
 
+  @SuppressWarnings("ConstantConditions")
   @Override
   public void onMethodCall(@NonNull MethodCall call, @NonNull final Result result) {
     String method = call.method;
