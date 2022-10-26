@@ -8,7 +8,6 @@ import 'callback_dispatcher.dart';
 typedef CallbackHandle? _GetCallbackHandle(Function callback);
 typedef SelectNotificationCallback = Future<dynamic> Function();
 
-
 class M3u8Downloader {
   static const MethodChannel _channel = const MethodChannel('vincent/m3u8_downloader', JSONMethodCodec());
   static _GetCallbackHandle _getCallbackHandle = (Function callback) => PluginUtilities.getCallbackHandle(callback);

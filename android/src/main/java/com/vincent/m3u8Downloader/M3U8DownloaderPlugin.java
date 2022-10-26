@@ -55,12 +55,6 @@ public class M3U8DownloaderPlugin implements FlutterPlugin, MethodCallHandler, P
   private long successCallbackHandle = -1;
   private long errorCallbackHandle = -1;
 
-  @SuppressWarnings("deprecation")
-  public static void registerWith(Registrar registrar) {
-    final M3U8DownloaderPlugin instance = new M3U8DownloaderPlugin();
-    instance.onAttachedToEngine(registrar.context(), registrar.messenger());
-  }
-
   @Override
   public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
     onAttachedToEngine(binding.getApplicationContext(), binding.getBinaryMessenger());

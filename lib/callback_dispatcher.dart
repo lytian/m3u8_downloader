@@ -4,6 +4,9 @@ import 'dart:ui';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
+/// Pragma annotation is needed to avoid tree shaking in release mode. See
+/// https://github.com/dart-lang/sdk/blob/master/runtime/docs/compiler/aot/entry_point_pragma.md
+@pragma('vm:entry-point')
 void callbackDispatcher() {
 
   // Initialize state necessary for MethodChannels.
